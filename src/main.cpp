@@ -11,8 +11,10 @@ Debug build:
 SQLITE_PREFIX="$(brew --prefix sqlite)" && clang++ -std=c++11 -O0 -g -Wall -Wextra -Wpedantic -fsanitize=address,undefined -fno-omit-frame-pointer -I"$SQLITE_PREFIX/include" -L"$SQLITE_PREFIX/lib" gene.cpp petal.cpp AlignedGeneEdge.cpp main.cpp -lsqlite3 -o INSPIRE_debug
 
 
+production build:
+SQLITE_PREFIX="$(brew --prefix sqlite)" && clang++ -std=c++11 -O3 -DNDEBUG -Wall -Wextra -Wpedantic -I"$SQLITE_PREFIX/include" -L"$SQLITE_PREFIX/lib" gene.cpp petal.cpp AlignedGeneEdge.cpp main.cpp -lsqlite3 -o INSPIRE
 
-
+	
 */
 
 
@@ -494,12 +496,15 @@ int main(int argc, char *argv[])
 	        argv[4];
 	}
 
-	AlignedGeneEdge::SetGOAlgorithm(
-	    goAlgorithm
-	);
+	AlignedGeneEdge::SetGOAlgorithm(goAlgorithm);
 
 	AlignedGeneEdge::LoadGONormalization();
-
+	//AlignedGeneEdge::GONormalize = 23.7367; 
+	cout
+	    << "GO normalization in use: "
+	    << AlignedGeneEdge::GONormalize
+	    << endl;
+	
 	AlignedGeneEdge::LoadGOWeightCache();
 	
 	

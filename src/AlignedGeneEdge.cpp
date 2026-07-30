@@ -12,7 +12,7 @@ vector<AlignedGeneEdge*> AlignedGeneEdge::AllEdges;
 
 string AlignedGeneEdge::GOAlgorithm = "inspire_legacy_v1";
 double AlignedGeneEdge::GONormalize = 1.0;
-
+//double AlignedGeneEdge::GONormalize = 23.7367;
 extern time_t start_time;
 extern int VERBOSE;
  

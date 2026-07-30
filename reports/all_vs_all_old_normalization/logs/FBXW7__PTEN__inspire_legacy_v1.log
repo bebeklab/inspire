@@ -1,0 +1,712 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite FBXW7 PTEN inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal FBXW7 (27)
+# 52 interactions in FBXW7
+Done adding UniProt and Pfam annotations for FBXW7.
+new petal PTEN (43)
+# 94 interactions in PTEN
+Done adding UniProt and Pfam annotations for PTEN.
+Petal Sizes: 27, 43
+[1;32mPetal Name: [1;33mFBXW7
+[1;32mPetal Size: [1;33m27[0;31m
+APC
+ATM
+BRAF
+BTRC
+CDC42
+EGFR
+EP300
+ERBIN
+FBXW11
+FBXW7
+GSK3B
+HIF1A
+KLF5
+KRAS
+LRP6
+LRRK2
+MDM2
+NOTCH2
+PTEN
+RBPJ
+SIAH1
+SMAD1
+SMAD4
+TBL1XR1
+TCF7L2
+TNKS
+YAP1
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 BTRC	pp	APC
+2 CDC42	pp	APC
+3 ERBIN	pp	APC
+4 ERBIN	pp	EGFR
+5 FBXW11	pp	APC
+6 FBXW7	pp	ATM
+7 FBXW7	pp	BRAF
+8 FBXW7	pp	EGFR
+9 FBXW7	pp	EP300
+10 GSK3B	pp	APC
+11 GSK3B	pp	BRAF
+12 GSK3B	pp	BTRC
+13 GSK3B	pp	FBXW11
+14 GSK3B	pp	FBXW7
+15 HIF1A	pp	FBXW7
+16 HIF1A	pp	GSK3B
+17 KLF5	pp	FBXW7
+18 KLF5	pp	GSK3B
+19 KRAS	pp	APC
+20 KRAS	pp	EGFR
+21 KRAS	pp	HIF1A
+22 LRP6	pp	APC
+23 LRP6	pp	GSK3B
+24 LRRK2	pp	APC
+25 LRRK2	pp	HIF1A
+26 MDM2	pp	FBXW7
+27 MDM2	pp	GSK3B
+28 NOTCH2	pp	FBXW7
+29 NOTCH2	pp	GSK3B
+30 PTEN	pp	CDC42
+31 PTEN	pp	FBXW7
+32 PTEN	pp	GSK3B
+33 RBPJ	pp	FBXW7
+34 SIAH1	pp	APC
+35 SIAH1	pp	HIF1A
+36 SMAD1	pp	FBXW7
+37 SMAD1	pp	GSK3B
+38 SMAD4	pp	APC
+39 SMAD4	pp	ATM
+40 SMAD4	pp	HIF1A
+41 SMAD4	pp	PTEN
+42 SMAD4	pp	RBPJ
+43 SMAD4	pp	SMAD1
+44 TBL1XR1	pp	APC
+45 TBL1XR1	pp	RBPJ
+46 TCF7L2	pp	APC
+47 TCF7L2	pp	EP300
+48 TCF7L2	pp	PTEN
+49 TNKS	pp	APC
+50 TNKS	pp	PTEN
+51 YAP1	pp	FBXW7
+52 YAP1	pp	GSK3B
+[0m
+[1;32mPetal Name: [1;33mPTEN
+[1;32mPetal Size: [1;33m43[0;31m
+AGO1
+APC
+ATM
+ATRX
+BCL2
+BMPR1A
+BRAF
+BTRC
+CCDC6
+CDC42
+CDKN1B
+CHUK
+CREB1
+EGFR
+ERBIN
+FBXW11
+FBXW7
+FOXO1
+FOXO3
+GSK3B
+HIF1A
+IQGAP1
+ITGB1
+JAK2
+KRAS
+LRP6
+LRRK2
+MAPK1
+MDM2
+NFE2L2
+PDPK1
+PIK3CB
+PIK3R1
+PTEN
+RBPJ
+SIRT1
+SMAD2
+SMAD4
+TBL1XR1
+TCF7L2
+TNKS
+YAP1
+ZEB1
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 BTRC	pp	APC
+2 CCDC6	pp	APC
+3 CCDC6	pp	BRAF
+4 CDC42	pp	APC
+5 CHUK	pp	BTRC
+6 ERBIN	pp	APC
+7 ERBIN	pp	CDC42
+8 ERBIN	pp	EGFR
+9 FBXW11	pp	APC
+10 FBXW7	pp	BTRC
+11 FBXW7	pp	CCDC6
+12 GSK3B	pp	APC
+13 GSK3B	pp	BRAF
+14 GSK3B	pp	BTRC
+15 GSK3B	pp	CDKN1B
+16 GSK3B	pp	CREB1
+17 GSK3B	pp	FBXW11
+18 GSK3B	pp	FBXW7
+19 GSK3B	pp	FOXO1
+20 GSK3B	pp	FOXO3
+21 HIF1A	pp	GSK3B
+22 IQGAP1	pp	APC
+23 IQGAP1	pp	EGFR
+24 ITGB1	pp	CDC42
+25 KRAS	pp	APC
+26 KRAS	pp	BCL2
+27 KRAS	pp	CDC42
+28 KRAS	pp	EGFR
+29 KRAS	pp	HIF1A
+30 KRAS	pp	JAK2
+31 LRP6	pp	APC
+32 LRP6	pp	GSK3B
+33 LRRK2	pp	AGO1
+34 LRRK2	pp	APC
+35 LRRK2	pp	HIF1A
+36 MAPK1	pp	GSK3B
+37 MDM2	pp	GSK3B
+38 NFE2L2	pp	GSK3B
+39 PDPK1	pp	GSK3B
+40 PIK3CB	pp	CDC42
+41 PIK3R1	pp	KRAS
+42 PTEN	pp	AGO1
+43 PTEN	pp	ATM
+44 PTEN	pp	ATRX
+45 PTEN	pp	BCL2
+46 PTEN	pp	BMPR1A
+47 PTEN	pp	BRAF
+48 PTEN	pp	CDC42
+49 PTEN	pp	CDKN1B
+50 PTEN	pp	CHUK
+51 PTEN	pp	CREB1
+52 PTEN	pp	EGFR
+53 PTEN	pp	FBXW7
+54 PTEN	pp	FOXO1
+55 PTEN	pp	FOXO3
+56 PTEN	pp	GSK3B
+57 PTEN	pp	HIF1A
+58 PTEN	pp	ITGB1
+59 PTEN	pp	JAK2
+60 PTEN	pp	MAPK1
+61 PTEN	pp	MDM2
+62 PTEN	pp	NFE2L2
+63 PTEN	pp	PDPK1
+64 PTEN	pp	PIK3CB
+65 PTEN	pp	PIK3R1
+66 RBPJ	pp	PTEN
+67 SIRT1	pp	GSK3B
+68 SIRT1	pp	PTEN
+69 SMAD2	pp	CDC42
+70 SMAD2	pp	ERBIN
+71 SMAD2	pp	GSK3B
+72 SMAD2	pp	PTEN
+73 SMAD4	pp	APC
+74 SMAD4	pp	ATM
+75 SMAD4	pp	BCL2
+76 SMAD4	pp	BMPR1A
+77 SMAD4	pp	CDC42
+78 SMAD4	pp	HIF1A
+79 SMAD4	pp	MAPK1
+80 SMAD4	pp	PTEN
+81 SMAD4	pp	RBPJ
+82 SMAD4	pp	SMAD2
+83 TBL1XR1	pp	APC
+84 TBL1XR1	pp	RBPJ
+85 TCF7L2	pp	APC
+86 TCF7L2	pp	CREB1
+87 TCF7L2	pp	PTEN
+88 TNKS	pp	APC
+89 TNKS	pp	ATRX
+90 TNKS	pp	PTEN
+91 YAP1	pp	GSK3B
+92 YAP1	pp	PTEN
+93 ZEB1	pp	PTEN
+94 ZEB1	pp	SMAD4
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mFBXW7 - PTEN[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 104
+counterPetal2 188
+counterPetal1*counterPetal2 19552
+(*AGE).size()=19552
+[0m---- 
+[1;33mAGE nodes: 19552[0m
+Allocate AGEgraph :  19552 x 19552	382280704 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 18 sec] Edges are done in 
+0th run results (0) [new minumum]:0.137439
+0 3492 cost: 606
+[0;36m		[A1. APC::A2. BTRC] ---  [B1. AGO1::B2. LRRK2}[0m
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. LRRK2::B2. APC}[0m
+3492 8654 cost: 500
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. LRRK2::B2. APC}[0m
+[0;36m		[A1. GSK3B::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+8654 5323 cost: 465
+[0;36m		[A1. GSK3B::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+[0;36m		[A1. FBXW11::A2. APC] ---  [B1. FBXW11::B2. GSK3B}[0m
+5323 17459 cost: 444
+[0;36m		[A1. FBXW11::A2. APC] ---  [B1. FBXW11::B2. GSK3B}[0m
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+17459 14229 cost: 104
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. CDC42] ---  [B1. PTEN::B2. CDC42}[0m
+14229 7395 cost: 100
+[0;36m		[A1. PTEN::A2. CDC42] ---  [B1. PTEN::B2. CDC42}[0m
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+7395 15003 cost: 100
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+7395 15192 cost: 100
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TNKS] ---  [B1. PTEN::B2. TNKS}[0m
+17459 16718 cost: 111
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. SMAD1::A2. SMAD4] ---  [B1. SMAD4::B2. SMAD2}[0m
+7395 2474 cost: 217
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+[0;36m		[A1. ATM::A2. FBXW7] ---  [B1. BTRC::B2. FBXW7}[0m
+15003 18603 cost: 217
+[0;36m		[A1. PTEN::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. EP300] ---  [B1. TCF7L2::B2. CREB1}[0m
+17459 1777 cost: 240
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. GSK3B::B2. SMAD2}[0m
+16718 10164 cost: 250
+[0;36m		[A1. SMAD1::A2. SMAD4] ---  [B1. SMAD4::B2. SMAD2}[0m
+[0;36m		[A1. GSK3B::A2. SMAD1] ---  [B1. APC::B2. SMAD4}[0m
+17459 11525 cost: 285
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. ERBIN::B2. SMAD2}[0m
+7395 13382 cost: 338
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+[0;36m		[A1. MDM2::A2. FBXW7] ---  [B1. CCDC6::B2. FBXW7}[0m
+17459 12702 cost: 444
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. LRP6::A2. APC] ---  [B1. LRP6::B2. GSK3B}[0m
+12702 9410 cost: 465
+[0;36m		[A1. LRP6::A2. APC] ---  [B1. LRP6::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. LRP6] ---  [B1. APC::B2. LRP6}[0m
+17459 4998 cost: 476
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. MAPK1::B2. GSK3B}[0m
+17459 8091 cost: 476
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. APC::B2. GSK3B}[0m
+17459 12075 cost: 476
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. KRAS::A2. APC] ---  [B1. CDKN1B::B2. GSK3B}[0m
+17459 12998 cost: 476
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. LRRK2::A2. APC] ---  [B1. BRAF::B2. GSK3B}[0m
+17459 15950 cost: 476
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. SIAH1::A2. APC] ---  [B1. SIRT1::B2. GSK3B}[0m
+8654 3100 cost: 500
+[0;36m		[A1. GSK3B::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+[0;36m		[A1. BRAF::A2. GSK3B] ---  [B1. IQGAP1::B2. APC}[0m
+8654 19462 cost: 500
+[0;36m		[A1. GSK3B::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+[0;36m		[A1. YAP1::A2. GSK3B] ---  [B1. KRAS::B2. APC}[0m
+17459 9029 cost: 571
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. APC::B2. ERBIN}[0m
+17459 17973 cost: 625
+[0;36m		[A1. SMAD4::A2. PTEN] ---  [B1. SMAD2::B2. PTEN}[0m
+[0;36m		[A1. TBL1XR1::A2. APC] ---  [B1. MDM2::B2. GSK3B}[0m
+7395 9591 cost: 714
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+[0;36m		[A1. GSK3B::A2. MDM2] ---  [B1. APC::B2. CCDC6}[0m
+8654 14088 cost: 909
+[0;36m		[A1. GSK3B::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+[0;36m		[A1. NOTCH2::A2. GSK3B] ---  [B1. TBL1XR1::B2. APC}[0m
+
+Displayed tree score: 0.137439
+
+1th run results (1) [new minumum]:0.596351
+1 8341 cost: 526
+[0;36m		[A1. APC::A2. BTRC] ---  [B1. AGO1::B2. PTEN}[0m
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+8341 759 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+8341 3415 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+759 3607 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+3607 381 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. ERBIN] ---  [B1. APC::B2. ERBIN}[0m
+3607 570 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+3607 949 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. KRAS] ---  [B1. APC::B2. KRAS}[0m
+3607 1138 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRP6] ---  [B1. APC::B2. LRP6}[0m
+3607 1327 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRRK2] ---  [B1. APC::B2. LRRK2}[0m
+3607 1704 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+3607 2082 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+3607 2271 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TNKS] ---  [B1. APC::B2. TNKS}[0m
+381 5132 cost: 100
+[0;36m		[A1. APC::A2. ERBIN] ---  [B1. APC::B2. ERBIN}[0m
+[0;36m		[A1. ERBIN::A2. EGFR] ---  [B1. ERBIN::B2. EGFR}[0m
+5132 4376 cost: 100
+[0;36m		[A1. ERBIN::A2. EGFR] ---  [B1. ERBIN::B2. EGFR}[0m
+[0;36m		[A1. EGFR::A2. KRAS] ---  [B1. EGFR::B2. KRAS}[0m
+8341 5511 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. FBXW11::A2. GSK3B] ---  [B1. FBXW11::B2. GSK3B}[0m
+8341 6454 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. FBXW7::A2. GSK3B] ---  [B1. FBXW7::B2. GSK3B}[0m
+759 9101 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+759 9478 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. LRP6] ---  [B1. GSK3B::B2. LRP6}[0m
+759 9668 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. MDM2] ---  [B1. GSK3B::B2. MDM2}[0m
+759 10047 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+759 10426 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. YAP1] ---  [B1. GSK3B::B2. YAP1}[0m
+9101 10992 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. KRAS] ---  [B1. HIF1A::B2. KRAS}[0m
+9101 11181 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. LRRK2] ---  [B1. HIF1A::B2. LRRK2}[0m
+9101 11559 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. HIF1A::B2. SMAD4}[0m
+3607 14229 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. PTEN::A2. CDC42] ---  [B1. PTEN::B2. CDC42}[0m
+14229 7395 cost: 100
+[0;36m		[A1. PTEN::A2. CDC42] ---  [B1. PTEN::B2. CDC42}[0m
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+10047 14814 cost: 100
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. SMAD4] ---  [B1. PTEN::B2. SMAD4}[0m
+10047 15003 cost: 100
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+10047 15192 cost: 100
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TNKS] ---  [B1. PTEN::B2. TNKS}[0m
+1704 17086 cost: 100
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+17086 15572 cost: 100
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. RBPJ::A2. SMAD4] ---  [B1. RBPJ::B2. SMAD4}[0m
+3607 1893 cost: 104
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TBL1XR1] ---  [B1. APC::B2. TBL1XR1}[0m
+759 10237 cost: 104
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. SMAD1] ---  [B1. GSK3B::B2. SMAD2}[0m
+17086 16708 cost: 104
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. SMAD1::A2. SMAD4] ---  [B1. SMAD2::B2. SMAD4}[0m
+15572 18225 cost: 104
+[0;36m		[A1. RBPJ::A2. SMAD4] ---  [B1. RBPJ::B2. SMAD4}[0m
+[0;36m		[A1. TBL1XR1::A2. RBPJ] ---  [B1. TBL1XR1::B2. RBPJ}[0m
+759 9852 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. NOTCH2] ---  [B1. GSK3B::B2. FOXO3}[0m
+2082 18603 cost: 217
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. EP300] ---  [B1. TCF7L2::B2. CREB1}[0m
+759 9296 cost: 298
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. KLF5] ---  [B1. GSK3B::B2. SIRT1}[0m
+3607 1512 cost: 327
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. SIAH1] ---  [B1. APC::B2. IQGAP1}[0m
+
+Displayed tree score: 0.596351
+
+2th run results (2) [new minumum]:0.65188
+2 3415 cost: 100
+[0;36m		[A1. APC::A2. BTRC] ---  [B1. APC::B2. BTRC}[0m
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+2 3607 cost: 100
+[0;36m		[A1. APC::A2. BTRC] ---  [B1. APC::B2. BTRC}[0m
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+3607 381 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. ERBIN] ---  [B1. APC::B2. ERBIN}[0m
+3607 570 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+3607 759 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+3607 949 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. KRAS] ---  [B1. APC::B2. KRAS}[0m
+3607 1138 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRP6] ---  [B1. APC::B2. LRP6}[0m
+3607 1327 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRRK2] ---  [B1. APC::B2. LRRK2}[0m
+3607 1704 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+3607 2082 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+3607 2271 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TNKS] ---  [B1. APC::B2. TNKS}[0m
+381 5132 cost: 100
+[0;36m		[A1. APC::A2. ERBIN] ---  [B1. APC::B2. ERBIN}[0m
+[0;36m		[A1. ERBIN::A2. EGFR] ---  [B1. ERBIN::B2. EGFR}[0m
+5132 4376 cost: 100
+[0;36m		[A1. ERBIN::A2. EGFR] ---  [B1. ERBIN::B2. EGFR}[0m
+[0;36m		[A1. EGFR::A2. KRAS] ---  [B1. EGFR::B2. KRAS}[0m
+570 5511 cost: 100
+[0;36m		[A1. APC::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+[0;36m		[A1. FBXW11::A2. GSK3B] ---  [B1. FBXW11::B2. GSK3B}[0m
+3415 8341 cost: 100
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+8341 6454 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. FBXW7::A2. GSK3B] ---  [B1. FBXW7::B2. GSK3B}[0m
+3415 9101 cost: 100
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+3415 9478 cost: 100
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. LRP6] ---  [B1. GSK3B::B2. LRP6}[0m
+3415 9668 cost: 100
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. MDM2] ---  [B1. GSK3B::B2. MDM2}[0m
+3415 10047 cost: 100
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+3415 10426 cost: 100
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. YAP1] ---  [B1. GSK3B::B2. YAP1}[0m
+9101 10992 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. KRAS] ---  [B1. HIF1A::B2. KRAS}[0m
+9101 11181 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. LRRK2] ---  [B1. HIF1A::B2. LRRK2}[0m
+9101 11559 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. HIF1A::B2. SMAD4}[0m
+3607 14229 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. PTEN::A2. CDC42] ---  [B1. PTEN::B2. CDC42}[0m
+14229 7395 cost: 100
+[0;36m		[A1. PTEN::A2. CDC42] ---  [B1. PTEN::B2. CDC42}[0m
+[0;36m		[A1. FBXW7::A2. PTEN] ---  [B1. FBXW7::B2. PTEN}[0m
+10047 14814 cost: 100
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. SMAD4] ---  [B1. PTEN::B2. SMAD4}[0m
+10047 15003 cost: 100
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+10047 15192 cost: 100
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TNKS] ---  [B1. PTEN::B2. TNKS}[0m
+1704 17086 cost: 100
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+17086 15572 cost: 100
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. RBPJ::A2. SMAD4] ---  [B1. RBPJ::B2. SMAD4}[0m
+3607 1893 cost: 104
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TBL1XR1] ---  [B1. APC::B2. TBL1XR1}[0m
+3415 10237 cost: 104
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. SMAD1] ---  [B1. GSK3B::B2. SMAD2}[0m
+17086 16708 cost: 104
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. SMAD1::A2. SMAD4] ---  [B1. SMAD2::B2. SMAD4}[0m
+15572 18225 cost: 104
+[0;36m		[A1. RBPJ::A2. SMAD4] ---  [B1. RBPJ::B2. SMAD4}[0m
+[0;36m		[A1. TBL1XR1::A2. RBPJ] ---  [B1. TBL1XR1::B2. RBPJ}[0m
+3415 9852 cost: 217
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. NOTCH2] ---  [B1. GSK3B::B2. FOXO3}[0m
+2082 18603 cost: 217
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. EP300] ---  [B1. TCF7L2::B2. CREB1}[0m
+3415 9296 cost: 298
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. KLF5] ---  [B1. GSK3B::B2. SIRT1}[0m
+3607 1512 cost: 327
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. SIAH1] ---  [B1. APC::B2. IQGAP1}[0m
+
+Displayed tree score: 0.65188
+
+2460th run results (3) [new minumum]:0.654686
+2460 17086 cost: 217
+[0;36m		[A1. ATM::A2. FBXW7] ---  [B1. ATM::B2. PTEN}[0m
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+17086 1704 cost: 100
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+1704 3224 cost: 100
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+3224 192 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. CDC42] ---  [B1. APC::B2. CDC42}[0m
+3224 381 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. ERBIN] ---  [B1. APC::B2. ERBIN}[0m
+3224 570 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+3224 759 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+3224 949 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. KRAS] ---  [B1. APC::B2. KRAS}[0m
+3224 1138 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRP6] ---  [B1. APC::B2. LRP6}[0m
+3224 1327 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRRK2] ---  [B1. APC::B2. LRRK2}[0m
+3224 2082 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+3224 2271 cost: 100
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. TNKS] ---  [B1. APC::B2. TNKS}[0m
+192 3800 cost: 100
+[0;36m		[A1. APC::A2. CDC42] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+381 5132 cost: 100
+[0;36m		[A1. APC::A2. ERBIN] ---  [B1. APC::B2. ERBIN}[0m
+[0;36m		[A1. ERBIN::A2. EGFR] ---  [B1. ERBIN::B2. EGFR}[0m
+5132 4376 cost: 100
+[0;36m		[A1. ERBIN::A2. EGFR] ---  [B1. ERBIN::B2. EGFR}[0m
+[0;36m		[A1. EGFR::A2. KRAS] ---  [B1. EGFR::B2. KRAS}[0m
+570 5511 cost: 100
+[0;36m		[A1. APC::A2. FBXW11] ---  [B1. APC::B2. FBXW11}[0m
+[0;36m		[A1. FBXW11::A2. GSK3B] ---  [B1. FBXW11::B2. GSK3B}[0m
+759 8341 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+8341 3415 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. BTRC::A2. GSK3B] ---  [B1. BTRC::B2. GSK3B}[0m
+8341 6454 cost: 100
+[0;36m		[A1. GSK3B::A2. BRAF] ---  [B1. GSK3B::B2. BRAF}[0m
+[0;36m		[A1. FBXW7::A2. GSK3B] ---  [B1. FBXW7::B2. GSK3B}[0m
+759 9101 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+759 9478 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. LRP6] ---  [B1. GSK3B::B2. LRP6}[0m
+759 9668 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. MDM2] ---  [B1. GSK3B::B2. MDM2}[0m
+759 10047 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+759 10426 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. YAP1] ---  [B1. GSK3B::B2. YAP1}[0m
+9101 10992 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. KRAS] ---  [B1. HIF1A::B2. KRAS}[0m
+9101 11181 cost: 100
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. HIF1A}[0m
+[0;36m		[A1. HIF1A::A2. LRRK2] ---  [B1. HIF1A::B2. LRRK2}[0m
+17086 11559 cost: 100
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. HIF1A::B2. SMAD4}[0m
+3800 14422 cost: 100
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. FBXW7] ---  [B1. PTEN::B2. FBXW7}[0m
+17086 14814 cost: 100
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. PTEN::A2. SMAD4] ---  [B1. PTEN::B2. SMAD4}[0m
+3800 15003 cost: 100
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+3800 15192 cost: 100
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TNKS] ---  [B1. PTEN::B2. TNKS}[0m
+17086 15572 cost: 100
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. RBPJ::A2. SMAD4] ---  [B1. RBPJ::B2. SMAD4}[0m
+3224 1893 cost: 104
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. TBL1XR1] ---  [B1. APC::B2. TBL1XR1}[0m
+759 10237 cost: 104
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. SMAD1] ---  [B1. GSK3B::B2. SMAD2}[0m
+17086 16708 cost: 104
+[0;36m		[A1. SMAD4::A2. ATM] ---  [B1. SMAD4::B2. ATM}[0m
+[0;36m		[A1. SMAD1::A2. SMAD4] ---  [B1. SMAD2::B2. SMAD4}[0m
+15572 18225 cost: 104
+[0;36m		[A1. RBPJ::A2. SMAD4] ---  [B1. RBPJ::B2. SMAD4}[0m
+[0;36m		[A1. TBL1XR1::A2. RBPJ] ---  [B1. TBL1XR1::B2. RBPJ}[0m
+759 9852 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. NOTCH2] ---  [B1. GSK3B::B2. FOXO3}[0m
+2082 18603 cost: 217
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. EP300] ---  [B1. TCF7L2::B2. CREB1}[0m
+759 9296 cost: 298
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. KLF5] ---  [B1. GSK3B::B2. SIRT1}[0m
+3224 1512 cost: 327
+[0;36m		[A1. BTRC::A2. APC] ---  [B1. BTRC::B2. APC}[0m
+[0;36m		[A1. APC::A2. SIAH1] ---  [B1. APC::B2. IQGAP1}[0m
+
+Displayed tree score: 0.654686
+
+Petal1:52	Petal2:94	treecost: 4792	 tree size:40
+$RESULT$	FBXW7	PTEN	norm_score:	0.654686
+[0m
+[1 min 49 sec] All done in 

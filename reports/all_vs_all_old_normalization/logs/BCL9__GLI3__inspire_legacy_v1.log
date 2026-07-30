@@ -1,0 +1,82 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite BCL9 GLI3 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal BCL9 (4)
+# 3 interactions in BCL9
+Done adding UniProt and Pfam annotations for BCL9.
+new petal GLI3 (6)
+# 7 interactions in GLI3
+Done adding UniProt and Pfam annotations for GLI3.
+Petal Sizes: 4, 6
+[1;32mPetal Name: [1;33mBCL9
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+BCL9
+CDC73
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC73	pp	BCL9
+2 TCF7L2	pp	APC
+3 TCF7L2	pp	CDC73
+[0m
+[1;32mPetal Name: [1;33mGLI3
+[1;32mPetal Size: [1;33m6[0;31m
+APC
+CREBBP
+GLI3
+GSK3B
+LRP6
+RUNX2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GLI3	pp	CREBBP
+2 GSK3B	pp	APC
+3 GSK3B	pp	CREBBP
+4 LRP6	pp	APC
+5 RUNX2	pp	GLI3
+6 RUNX2	pp	GSK3B
+7 RUNX2	pp	LRP6
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mBCL9 - GLI3[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 6
+counterPetal2 14
+counterPetal1*counterPetal2 84
+(*AGE).size()=84
+[0m---- 
+[1;33mAGE nodes: 84[0m
+Allocate AGEgraph :  84 x 84	7056 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.124456
+0 77 cost: 555
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. GSK3B::B2. CREBBP}[0m
+77 30 cost: 1052
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. GSK3B::B2. CREBBP}[0m
+[0;36m		[A1. CDC73::A2. BCL9] ---  [B1. CREBBP::B2. GLI3}[0m
+
+Displayed tree score: 0.124456
+
+3th run results (1) [new minumum]:0.140449
+3 76 cost: 555
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. CREBBP::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. GSK3B::B2. APC}[0m
+76 29 cost: 869
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. BCL9] ---  [B1. APC::B2. LRP6}[0m
+
+Displayed tree score: 0.140449
+
+Petal1:3	Petal2:7	treecost: 1424	 tree size:2
+$RESULT$	BCL9	GLI3	norm_score:	0.140449
+[0m
+[0 min 0 sec] All done in 

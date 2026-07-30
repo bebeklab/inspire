@@ -1,0 +1,143 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite MMP2 NF1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal MMP2 (5)
+# 5 interactions in MMP2
+Done adding UniProt and Pfam annotations for MMP2.
+new petal NF1 (13)
+# 20 interactions in NF1
+Done adding UniProt and Pfam annotations for NF1.
+Petal Sizes: 5, 13
+[1;32mPetal Name: [1;33mMMP2
+[1;32mPetal Size: [1;33m5[0;31m
+APC
+GSK3B
+HIF1A
+MMP2
+SMAD4
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 HIF1A	pp	GSK3B
+3 MMP2	pp	HIF1A
+4 SMAD4	pp	APC
+5 SMAD4	pp	HIF1A
+[0m
+[1;32mPetal Name: [1;33mNF1
+[1;32mPetal Size: [1;33m13[0;31m
+APC
+ATM
+BRCA1
+CDC42
+EGFR
+ERBIN
+GSK3B
+MDM2
+NF1
+PTEN
+SMAD4
+TCF7L2
+TNKS
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC42	pp	APC
+2 ERBIN	pp	APC
+3 ERBIN	pp	EGFR
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 MDM2	pp	GSK3B
+7 NF1	pp	ATM
+8 NF1	pp	BRCA1
+9 NF1	pp	EGFR
+10 NF1	pp	MDM2
+11 PTEN	pp	CDC42
+12 PTEN	pp	GSK3B
+13 PTEN	pp	NF1
+14 SMAD4	pp	APC
+15 SMAD4	pp	ATM
+16 SMAD4	pp	PTEN
+17 TCF7L2	pp	APC
+18 TCF7L2	pp	PTEN
+19 TNKS	pp	APC
+20 TNKS	pp	PTEN
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mMMP2 - NF1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 10
+counterPetal2 40
+counterPetal1*counterPetal2 400
+(*AGE).size()=400
+[0m---- 
+[1;33mAGE nodes: 400[0m
+Allocate AGEgraph :  400 x 400	160000 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.250278
+0 353 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+353 247 cost: 217
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. ATM::B2. SMAD4}[0m
+353 142 cost: 465
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. NF1::B2. ATM}[0m
+
+Displayed tree score: 0.250278
+
+2th run results (1) [new minumum]:0.287724
+2 353 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+2 137 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. BRCA1}[0m
+2 209 cost: 465
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. HIF1A::A2. MMP2] ---  [B1. BRCA1::B2. NF1}[0m
+
+Displayed tree score: 0.287724
+
+120th run results (2) [new minumum]:0.32077
+120 353 cost: 465
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+353 2 cost: 100
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+353 247 cost: 217
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. ATM::B2. SMAD4}[0m
+353 302 cost: 465
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. MMP2::A2. HIF1A] ---  [B1. NF1::B2. ATM}[0m
+
+Displayed tree score: 0.32077
+
+137th run results (3) [new minumum]:0.4004
+137 2 cost: 217
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. BRCA1}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+2 353 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+353 247 cost: 217
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. ATM::B2. SMAD4}[0m
+353 302 cost: 465
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. MMP2::A2. HIF1A] ---  [B1. NF1::B2. ATM}[0m
+
+Displayed tree score: 0.4004
+
+Petal1:5	Petal2:20	treecost: 999	 tree size:4
+$RESULT$	MMP2	NF1	norm_score:	0.4004
+[0m
+[0 min 0 sec] All done in 

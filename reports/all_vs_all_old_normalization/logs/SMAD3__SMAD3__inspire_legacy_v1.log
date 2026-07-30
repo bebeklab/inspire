@@ -1,0 +1,224 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite SMAD3 SMAD3 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal SMAD3 (18)
+# 29 interactions in SMAD3
+Done adding UniProt and Pfam annotations for SMAD3.
+new petal SMAD3 (18)
+# 29 interactions in SMAD3
+Done adding UniProt and Pfam annotations for SMAD3.
+Petal Sizes: 18, 18
+[1;32mPetal Name: [1;33mSMAD3
+[1;32mPetal Size: [1;33m18[0;31m
+APC
+BTRC
+CDC42
+CREBBP
+EP300
+ETS1
+FOXO3
+GSK3B
+ITGB1
+MAP2K1
+NCOR1
+NFATC2
+RNF111
+SMAD3
+SMAD4
+SP1
+TBL1XR1
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 BTRC	pp	APC
+2 CDC42	pp	APC
+3 EP300	pp	BTRC
+4 GSK3B	pp	APC
+5 GSK3B	pp	CREBBP
+6 GSK3B	pp	FOXO3
+7 ITGB1	pp	CDC42
+8 MAP2K1	pp	CDC42
+9 NFATC2	pp	GSK3B
+10 SMAD3	pp	CREBBP
+11 SMAD3	pp	EP300
+12 SMAD3	pp	ETS1
+13 SMAD3	pp	FOXO3
+14 SMAD3	pp	ITGB1
+15 SMAD3	pp	MAP2K1
+16 SMAD3	pp	NCOR1
+17 SMAD3	pp	NFATC2
+18 SMAD3	pp	RNF111
+19 SMAD4	pp	APC
+20 SMAD4	pp	ETS1
+21 SMAD4	pp	MAP2K1
+22 SMAD4	pp	NCOR1
+23 SMAD4	pp	RNF111
+24 SP1	pp	SMAD3
+25 SP1	pp	SMAD4
+26 TBL1XR1	pp	APC
+27 TBL1XR1	pp	NCOR1
+28 TCF7L2	pp	APC
+29 TCF7L2	pp	EP300
+[0m
+[1;32mPetal Name: [1;33mSMAD3
+[1;32mPetal Size: [1;33m18[0;31m
+APC
+BTRC
+CDC42
+CREBBP
+EP300
+ETS1
+FOXO3
+GSK3B
+ITGB1
+MAP2K1
+NCOR1
+NFATC2
+RNF111
+SMAD3
+SMAD4
+SP1
+TBL1XR1
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 BTRC	pp	APC
+2 CDC42	pp	APC
+3 EP300	pp	BTRC
+4 GSK3B	pp	APC
+5 GSK3B	pp	CREBBP
+6 GSK3B	pp	FOXO3
+7 ITGB1	pp	CDC42
+8 MAP2K1	pp	CDC42
+9 NFATC2	pp	GSK3B
+10 SMAD3	pp	CREBBP
+11 SMAD3	pp	EP300
+12 SMAD3	pp	ETS1
+13 SMAD3	pp	FOXO3
+14 SMAD3	pp	ITGB1
+15 SMAD3	pp	MAP2K1
+16 SMAD3	pp	NCOR1
+17 SMAD3	pp	NFATC2
+18 SMAD3	pp	RNF111
+19 SMAD4	pp	APC
+20 SMAD4	pp	ETS1
+21 SMAD4	pp	MAP2K1
+22 SMAD4	pp	NCOR1
+23 SMAD4	pp	RNF111
+24 SP1	pp	SMAD3
+25 SP1	pp	SMAD4
+26 TBL1XR1	pp	APC
+27 TBL1XR1	pp	NCOR1
+28 TCF7L2	pp	APC
+29 TCF7L2	pp	EP300
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mSMAD3 - SMAD3[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 58
+counterPetal2 58
+counterPetal1*counterPetal2 3364
+(*AGE).size()=3364
+[0m---- 
+[1;33mAGE nodes: 3364[0m
+Allocate AGEgraph :  3364 x 3364	11316496 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.997151
+0 413 cost: 100
+[0;36m		[A1. APC::A2. BTRC] ---  [B1. APC::B2. BTRC}[0m
+[0;36m		[A1. BTRC::A2. EP300] ---  [B1. BTRC::B2. EP300}[0m
+0 472 cost: 100
+[0;36m		[A1. APC::A2. BTRC] ---  [B1. APC::B2. BTRC}[0m
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+472 118 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+472 177 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+472 295 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+413 826 cost: 100
+[0;36m		[A1. BTRC::A2. EP300] ---  [B1. BTRC::B2. EP300}[0m
+[0;36m		[A1. EP300::A2. SMAD3] ---  [B1. EP300::B2. SMAD3}[0m
+413 885 cost: 100
+[0;36m		[A1. BTRC::A2. EP300] ---  [B1. BTRC::B2. EP300}[0m
+[0;36m		[A1. EP300::A2. TCF7L2] ---  [B1. EP300::B2. TCF7L2}[0m
+118 1239 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. CREBBP] ---  [B1. GSK3B::B2. CREBBP}[0m
+1239 708 cost: 100
+[0;36m		[A1. GSK3B::A2. CREBBP] ---  [B1. GSK3B::B2. CREBBP}[0m
+[0;36m		[A1. CREBBP::A2. SMAD3] ---  [B1. CREBBP::B2. SMAD3}[0m
+1239 1062 cost: 100
+[0;36m		[A1. GSK3B::A2. CREBBP] ---  [B1. GSK3B::B2. CREBBP}[0m
+[0;36m		[A1. FOXO3::A2. GSK3B] ---  [B1. FOXO3::B2. GSK3B}[0m
+118 1357 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. NFATC2] ---  [B1. GSK3B::B2. NFATC2}[0m
+472 1416 cost: 100
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. ITGB1::A2. CDC42] ---  [B1. ITGB1::B2. CDC42}[0m
+1416 590 cost: 100
+[0;36m		[A1. ITGB1::A2. CDC42] ---  [B1. ITGB1::B2. CDC42}[0m
+[0;36m		[A1. CDC42::A2. MAP2K1] ---  [B1. CDC42::B2. MAP2K1}[0m
+590 1593 cost: 100
+[0;36m		[A1. CDC42::A2. MAP2K1] ---  [B1. CDC42::B2. MAP2K1}[0m
+[0;36m		[A1. MAP2K1::A2. SMAD3] ---  [B1. MAP2K1::B2. SMAD3}[0m
+590 1652 cost: 100
+[0;36m		[A1. CDC42::A2. MAP2K1] ---  [B1. CDC42::B2. MAP2K1}[0m
+[0;36m		[A1. MAP2K1::A2. SMAD4] ---  [B1. MAP2K1::B2. SMAD4}[0m
+1357 1947 cost: 100
+[0;36m		[A1. GSK3B::A2. NFATC2] ---  [B1. GSK3B::B2. NFATC2}[0m
+[0;36m		[A1. NFATC2::A2. SMAD3] ---  [B1. NFATC2::B2. SMAD3}[0m
+826 2242 cost: 100
+[0;36m		[A1. EP300::A2. SMAD3] ---  [B1. EP300::B2. SMAD3}[0m
+[0;36m		[A1. SMAD3::A2. ETS1] ---  [B1. SMAD3::B2. ETS1}[0m
+2242 1003 cost: 100
+[0;36m		[A1. SMAD3::A2. ETS1] ---  [B1. SMAD3::B2. ETS1}[0m
+[0;36m		[A1. ETS1::A2. SMAD4] ---  [B1. ETS1::B2. SMAD4}[0m
+2242 1121 cost: 100
+[0;36m		[A1. SMAD3::A2. ETS1] ---  [B1. SMAD3::B2. ETS1}[0m
+[0;36m		[A1. FOXO3::A2. SMAD3] ---  [B1. FOXO3::B2. SMAD3}[0m
+2242 1475 cost: 100
+[0;36m		[A1. SMAD3::A2. ETS1] ---  [B1. SMAD3::B2. ETS1}[0m
+[0;36m		[A1. ITGB1::A2. SMAD3] ---  [B1. ITGB1::B2. SMAD3}[0m
+2242 1711 cost: 100
+[0;36m		[A1. SMAD3::A2. ETS1] ---  [B1. SMAD3::B2. ETS1}[0m
+[0;36m		[A1. NCOR1::A2. SMAD3] ---  [B1. NCOR1::B2. SMAD3}[0m
+2242 2006 cost: 100
+[0;36m		[A1. SMAD3::A2. ETS1] ---  [B1. SMAD3::B2. ETS1}[0m
+[0;36m		[A1. RNF111::A2. SMAD3] ---  [B1. RNF111::B2. SMAD3}[0m
+826 2655 cost: 100
+[0;36m		[A1. EP300::A2. SMAD3] ---  [B1. EP300::B2. SMAD3}[0m
+[0;36m		[A1. SMAD3::A2. SP1] ---  [B1. SMAD3::B2. SP1}[0m
+177 2891 cost: 100
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. SMAD4::A2. NCOR1] ---  [B1. SMAD4::B2. NCOR1}[0m
+2891 2065 cost: 100
+[0;36m		[A1. SMAD4::A2. NCOR1] ---  [B1. SMAD4::B2. NCOR1}[0m
+[0;36m		[A1. RNF111::A2. SMAD4] ---  [B1. RNF111::B2. SMAD4}[0m
+177 3009 cost: 100
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. SMAD4::A2. SP1] ---  [B1. SMAD4::B2. SP1}[0m
+472 236 cost: 104
+[0;36m		[A1. CDC42::A2. APC] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. APC::A2. TBL1XR1] ---  [B1. APC::B2. TBL1XR1}[0m
+2891 1829 cost: 104
+[0;36m		[A1. SMAD4::A2. NCOR1] ---  [B1. SMAD4::B2. NCOR1}[0m
+[0;36m		[A1. NCOR1::A2. TBL1XR1] ---  [B1. NCOR1::B2. TBL1XR1}[0m
+
+Displayed tree score: 0.997151
+
+Petal1:29	Petal2:29	treecost: 2808	 tree size:28
+$RESULT$	SMAD3	SMAD3	norm_score:	0.997151
+[0m
+[0 min 2 sec] All done in 

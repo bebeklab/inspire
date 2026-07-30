@@ -1,0 +1,66 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite IGFBP3 IGFBP3 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal IGFBP3 (4)
+# 3 interactions in IGFBP3
+Done adding UniProt and Pfam annotations for IGFBP3.
+new petal IGFBP3 (4)
+# 3 interactions in IGFBP3
+Done adding UniProt and Pfam annotations for IGFBP3.
+Petal Sizes: 4, 4
+[1;32mPetal Name: [1;33mIGFBP3
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+GSK3B
+IGFBP3
+WNT5A
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 WNT5A	pp	GSK3B
+3 WNT5A	pp	IGFBP3
+[0m
+[1;32mPetal Name: [1;33mIGFBP3
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+GSK3B
+IGFBP3
+WNT5A
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 WNT5A	pp	GSK3B
+3 WNT5A	pp	IGFBP3
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mIGFBP3 - IGFBP3[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 6
+counterPetal2 6
+counterPetal1*counterPetal2 36
+(*AGE).size()=36
+[0m---- 
+[1;33mAGE nodes: 36[0m
+Allocate AGEgraph :  36 x 36	1296 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:1
+0 14 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. WNT5A] ---  [B1. GSK3B::B2. WNT5A}[0m
+14 35 cost: 100
+[0;36m		[A1. GSK3B::A2. WNT5A] ---  [B1. GSK3B::B2. WNT5A}[0m
+[0;36m		[A1. WNT5A::A2. IGFBP3] ---  [B1. WNT5A::B2. IGFBP3}[0m
+
+Displayed tree score: 1
+
+Petal1:3	Petal2:3	treecost: 200	 tree size:2
+$RESULT$	IGFBP3	IGFBP3	norm_score:	1
+[0m
+[0 min 0 sec] All done in 

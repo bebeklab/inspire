@@ -1,0 +1,107 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite MMP2 UHRF2 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal MMP2 (5)
+# 5 interactions in MMP2
+Done adding UniProt and Pfam annotations for MMP2.
+new petal UHRF2 (5)
+# 5 interactions in UHRF2
+Done adding UniProt and Pfam annotations for UHRF2.
+Petal Sizes: 5, 5
+[1;32mPetal Name: [1;33mMMP2
+[1;32mPetal Size: [1;33m5[0;31m
+APC
+GSK3B
+HIF1A
+MMP2
+SMAD4
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 HIF1A	pp	GSK3B
+3 MMP2	pp	HIF1A
+4 SMAD4	pp	APC
+5 SMAD4	pp	HIF1A
+[0m
+[1;32mPetal Name: [1;33mUHRF2
+[1;32mPetal Size: [1;33m5[0;31m
+APC
+CCND1
+GSK3B
+LRP6
+UHRF2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 GSK3B	pp	CCND1
+3 LRP6	pp	APC
+4 LRP6	pp	CCND1
+5 UHRF2	pp	CCND1
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mMMP2 - UHRF2[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 10
+counterPetal2 10
+counterPetal1*counterPetal2 100
+(*AGE).size()=100
+[0m---- 
+[1;33mAGE nodes: 100[0m
+Allocate AGEgraph :  100 x 100	10000 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.201715
+0 36 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. CCND1}[0m
+0 87 cost: 227
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. LRP6::B2. APC}[0m
+0 63 cost: 487
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. CCND1::B2. LRP6}[0m
+0 54 cost: 1052
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. HIF1A::A2. MMP2] ---  [B1. CCND1::B2. UHRF2}[0m
+
+Displayed tree score: 0.201715
+
+11th run results (1) [new minumum]:0.224972
+11 25 cost: 227
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. LRP6}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+25 42 cost: 217
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. HIF1A::A2. GSK3B] ---  [B1. CCND1::B2. GSK3B}[0m
+25 78 cost: 465
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. MMP2::A2. HIF1A] ---  [B1. LRP6::B2. CCND1}[0m
+25 99 cost: 869
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. SMAD4::A2. HIF1A] ---  [B1. UHRF2::B2. CCND1}[0m
+
+Displayed tree score: 0.224972
+
+53th run results (2) [new minumum]:0.247525
+53 0 cost: 465
+[0;36m		[A1. HIF1A::A2. MMP2] ---  [B1. CCND1::B2. LRP6}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+0 36 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. GSK3B::B2. CCND1}[0m
+0 87 cost: 227
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. LRP6::B2. APC}[0m
+
+Displayed tree score: 0.247525
+
+Petal1:5	Petal2:5	treecost: 909	 tree size:3
+$RESULT$	MMP2	UHRF2	norm_score:	0.247525
+[0m
+[0 min 0 sec] All done in 

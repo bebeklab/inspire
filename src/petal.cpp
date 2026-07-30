@@ -221,16 +221,50 @@ void Petal::PrintPetalInteractions(){
 
 
 
-void Petal::PrintPetalGenes (){
-	cout<<GREEN<<"Petal Name: "<<YELLOW<<this->Name<<endl<<GREEN<<"Petal Size: "<<YELLOW<<(this->size)<<red<<endl;
+// old // void Petal::PrintPetalGenes (){
+// old // 	cout<<GREEN<<"Petal Name: "<<YELLOW<<this->Name<<endl<<GREEN<<"Petal Size: "<<YELLOW<<(this->size)<<red<<endl;
+// old // 
+// old // 	for (vector<Gene *>::iterator it = this->GenesList.begin(); it!=this->GenesList.end(); ++it) {
+// old // 		cout << (*it)->getName() << endl;
+// old // 	}
+// old // 	cout<<NC<<"---- "<<endl;
+// old // 
+// old // }
+// old // 
 
-	for (vector<Gene *>::iterator it = this->GenesList.begin(); it!=this->GenesList.end(); ++it) {
-		cout << (*it)->getName() << endl;
-	}
-	cout<<NC<<"---- "<<endl;
 
+
+void Petal::PrintPetalGenes()
+{
+    cout
+        << GREEN
+        << "Petal Name: "
+        << YELLOW
+        << this->Name
+        << endl
+        << GREEN
+        << "Petal Size: "
+        << YELLOW
+        << this->size
+        << red
+        << endl;
+
+    for (
+        vector<Gene*>::iterator it =
+            this->GenesList.begin();
+        it != this->GenesList.end();
+        ++it)
+    {
+        cout
+            << (*it)->getName()
+            << endl;
+    }
+
+    cout
+        << NC
+        << "---- "
+        << endl;
 }
-
 
 int Petal::OpenDatabase(
     const std::string& databaseFile)

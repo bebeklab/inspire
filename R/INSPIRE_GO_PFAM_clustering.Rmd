@@ -1,0 +1,751 @@
+---
+title: "INSPIRE, GO, and Pfam Petal Similarity Analysis"
+author: "Gurkan Bebek"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: hide
+params:
+  database: "../database/inspire.sqlite"
+  inspire_log_dir: "../reports/all_vs_all/logs"
+  go_algorithm: "inspire_legacy_v1"
+  inspire_threshold: 0.60
+  max_k: 8
+  consensus_reps: 1000
+  consensus_item_fraction: 0.80
+  random_seed: 20260728
+  output_dir: "../reports/clustering"
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+required_cran <- c(
+  "DBI", "RSQLite", "dplyr", "tidyr", "readr", "stringr",
+  "ggplot2", "igraph", "pheatmap", "patchwork"
+)
+
+missing_cran <- required_cran[!vapply(required_cran, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing_cran) > 0) {
+  stop(
+    "Install missing R packages before knitting: ",
+    paste(missing_cran, collapse = ", "),
+    "\nExample: install.packages(c(",
+    paste(sprintf("'%s'", missing_cran), collapse = ", "),
+    "))"
+  )
+}
+
+library(DBI)
+library(RSQLite)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(ggplot2)
+library(igraph)
+library(pheatmap)
+library(patchwork)
+
+set.seed(params$random_seed)
+dir.create(params$output_dir, recursive = TRUE, showWarnings = FALSE)
+
+fmt <- function(x, digits = 3) format(round(x, digits), nsmall = digits)
+```
+
+# Purpose and analysis design
+
+This report compares the petal networks in three distinct ways:
+
+1. **INSPIRE network similarity**: the normalized score produced by the  network-alignment algorithm implemented in C++.
+2. **GO gene-set similarity**: petal genes are compared directly using the gene-pair GO scores. Network topology is not used.
+3. **Pfam gene-set similarity**: petal genes are compared directly using Jaccard similarity between their Pfam-domain sets. Network topology is not used.
+
+GO-only and Pfam-only are therefore independent petal gene-set comparisons.
+
+For GO and Pfam, petal-level similarity is calculated with the symmetric best-match average (BMA):
+
+\[
+S(A,B) = \frac{1}{2}\left[
+\frac{1}{|A|}\sum_{a \in A}\max_{b \in B}s(a,b)
++ 
+\frac{1}{|B|}\sum_{b \in B}\max_{a \in A}s(a,b)
+\right]
+\]
+
+This statistic gives every gene in each petal one best counterpart in the other petal, treats the two petals symmetrically, and accommodates unequal petal sizes. The diagonal is defined as 1 for all three matrices.
+
+The primary clustering uses the complete similarity matrices. The threshold of `r params$inspire_threshold` is used only for a high-confidence INSPIRE graph and sensitivity summaries, not to manufacture the primary clusters.
+
+# Load and validate the SQLite database
+
+
+
+```{r}
+db_file <- normalizePath(params$database, mustWork = TRUE)
+
+cat("DB:", db_file, "\n")
+
+con <- dbConnect(RSQLite::SQLite(), db_file)
+
+cat("Connected\n")
+cat("Valid:", DBI::dbIsValid(con), "\n")
+
+print(DBI::dbListTables(con))
+
+integrity <- dbGetQuery(con, "PRAGMA integrity_check")[[1]][1]
+
+```
+
+
+```{r database, error=TRUE}
+cat("START DATABASE CHUNK\n")
+
+print(exists("con"))
+if (exists("con")) {
+  print(con)
+}
+
+db_file <- normalizePath(params$database, mustWork = TRUE)
+
+con <- DBI::dbConnect(RSQLite::SQLite(), db_file)
+ 
+ 
+integrity <- dbGetQuery(con, "PRAGMA integrity_check")[[1]][1]
+if (!identical(integrity, "ok")) stop("SQLite integrity check failed: ", integrity)
+
+fk <- dbGetQuery(con, "PRAGMA foreign_key_check")
+if (nrow(fk) > 0) stop("SQLite foreign-key check returned errors")
+
+petals <- dbGetQuery(
+  con,
+  "SELECT petal, gene_count, edge_count FROM petal ORDER BY petal"
+)
+
+petal_names <- petals$petal
+n_petals <- length(petal_names)
+if (n_petals < 3) stop("At least three petals are required for clustering")
+
+petals
+ 
+```
+
+# Helper functions
+
+```{r helpers}
+empty_similarity_matrix <- function(names) {
+  m <- matrix(NA_real_, nrow = length(names), ncol = length(names),
+              dimnames = list(names, names))
+  diag(m) <- 1
+  m
+}
+
+long_pairs_to_matrix <- function(df, names, value_col = "score") {
+  m <- empty_similarity_matrix(names)
+  values <- df[[value_col]]
+  for (i in seq_len(nrow(df))) {
+    a <- df$petal_a[i]
+    b <- df$petal_b[i]
+    if (a %in% names && b %in% names && is.finite(values[i])) {
+      m[a, b] <- values[i]
+      m[b, a] <- values[i]
+    }
+  }
+  diag(m) <- 1
+  m
+}
+
+validate_similarity <- function(m, label) {
+  if (!is.matrix(m) || nrow(m) != ncol(m)) stop(label, " is not square")
+  if (!identical(rownames(m), colnames(m))) stop(label, " names do not match")
+  if (anyNA(m)) {
+    missing <- which(is.na(m), arr.ind = TRUE)
+    stop(label, " contains missing values; first missing pair: ",
+         rownames(m)[missing[1, 1]], " / ", colnames(m)[missing[1, 2]])
+  }
+  if (max(abs(m - t(m))) > 1e-10) stop(label, " is not symmetric")
+  if (any(m < -1e-10 | m > 1 + 1e-10)) {
+    stop(label, " contains values outside [0, 1]")
+  }
+  invisible(TRUE)
+}
+
+best_match_average <- function(genes_a, genes_b, gene_similarity) {
+  block <- gene_similarity[genes_a, genes_b, drop = FALSE]
+  if (length(block) == 0 || anyNA(block)) return(NA_real_)
+  forward <- mean(apply(block, 1, max))
+  reverse <- mean(apply(block, 2, max))
+  (forward + reverse) / 2
+}
+
+matrix_to_long <- function(m, method) {
+  as.data.frame(as.table(m), stringsAsFactors = FALSE) |>
+    transmute(petal_a = Var1, petal_b = Var2, score = Freq, method = method) |>
+    filter(petal_a < petal_b)
+}
+
+similarity_heatmap <- function(m, title, annotation = NULL) {
+  pheatmap(
+    m,
+    clustering_distance_rows = as.dist(1 - m),
+    clustering_distance_cols = as.dist(1 - m),
+    clustering_method = "average",
+    annotation_row = annotation,
+    annotation_col = annotation,
+    main = title,
+    border_color = NA,
+    silent = TRUE
+  )
+}
+
+# Item-resampling consensus hierarchical clustering for a precomputed
+# similarity matrix. At each iteration, a subset of petals is clustered using
+# D = 1 - S. Co-clustering counts are divided by co-sampling counts.
+consensus_for_k <- function(similarity, k, reps = 1000, item_fraction = 0.8,
+                            linkage = "average", seed = 1) {
+  set.seed(seed + k)
+  n <- nrow(similarity)
+  item_count <- max(k + 1L, ceiling(n * item_fraction))
+  item_count <- min(item_count, n)
+
+  sampled_count <- matrix(0L, n, n, dimnames = dimnames(similarity))
+  cocluster_count <- matrix(0L, n, n, dimnames = dimnames(similarity))
+
+  for (r in seq_len(reps)) {
+    idx <- sort(sample.int(n, item_count, replace = FALSE))
+    sub_similarity <- similarity[idx, idx, drop = FALSE]
+    hc <- hclust(as.dist(1 - sub_similarity), method = linkage)
+    membership <- cutree(hc, k = k)
+
+    sampled_count[idx, idx] <- sampled_count[idx, idx] + 1L
+    same_cluster <- outer(membership, membership, FUN = "==")
+    cocluster_count[idx, idx] <- cocluster_count[idx, idx] + same_cluster
+  }
+
+  consensus <- matrix(NA_real_, n, n, dimnames = dimnames(similarity))
+  observed <- sampled_count > 0
+  consensus[observed] <- cocluster_count[observed] / sampled_count[observed]
+  diag(consensus) <- 1
+
+  hc_final <- hclust(as.dist(1 - consensus), method = linkage)
+  clusters <- cutree(hc_final, k = k)
+
+  off_diagonal <- consensus[upper.tri(consensus)]
+  pac <- mean(off_diagonal > 0.1 & off_diagonal < 0.9, na.rm = TRUE)
+
+  within <- c()
+  for (cluster_id in sort(unique(clusters))) {
+    members <- which(clusters == cluster_id)
+    if (length(members) >= 2) {
+      within <- c(within, consensus[members, members][upper.tri(consensus[members, members])])
+    }
+  }
+
+  list(
+    k = k,
+    consensus = consensus,
+    clusters = clusters,
+    pac = pac,
+    mean_within_consensus = if (length(within)) mean(within, na.rm = TRUE) else NA_real_
+  )
+}
+
+run_consensus <- function(similarity, max_k, reps, item_fraction, seed) {
+  max_k <- min(max_k, nrow(similarity) - 1L)
+  results <- lapply(2:max_k, function(k) {
+    consensus_for_k(similarity, k, reps, item_fraction, seed = seed)
+  })
+  metrics <- bind_rows(lapply(results, function(x) {
+    tibble(k = x$k, PAC = x$pac,
+           mean_within_consensus = x$mean_within_consensus)
+  }))
+  # Lower PAC is preferred. Ties are resolved in favor of the smaller k.
+  best_k <- metrics$k[order(metrics$PAC, metrics$k)][1]
+  best <- results[[which(vapply(results, function(x) x$k, integer(1)) == best_k)]]
+  list(results = results, metrics = metrics, best = best)
+}
+```
+
+# Comparison 1: INSPIRE network similarity
+
+## Parse completed all-versus-all logs
+
+```{r inspire-logs}
+
+ 
+
+stopifnot(dir.exists(params$inspire_log_dir))
+log_files <- list.files(params$inspire_log_dir, pattern = "\\.log$", full.names = TRUE)
+if (length(log_files) == 0) stop("No INSPIRE log files were found")
+
+parse_inspire_log <- function(path) {
+  text <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  matches <- str_match_all(
+    text,
+    "\\$RESULT\\$\\s+(\\S+)\\s+(\\S+)\\s+norm_score:\\s+(-?[0-9.]+(?:[eE][+-]?[0-9]+)?)"
+  )[[1]]
+
+  if (nrow(matches) == 0) {
+    return(tibble(log_file = path, petal_a = NA_character_, petal_b = NA_character_,
+                  score = NA_real_, status = "incomplete"))
+  }
+
+  last <- matches[nrow(matches), ]
+  tibble(
+    log_file = path,
+    petal_a = last[2],
+    petal_b = last[3],
+    score = as.numeric(last[4]),
+    status = "complete"
+  )
+}
+
+inspire_logs <- bind_rows(lapply(log_files, parse_inspire_log))
+inspire_pairs <- inspire_logs |>
+  filter(status == "complete", petal_a != petal_b) |>
+  distinct(petal_a, petal_b, .keep_all = TRUE)
+
+expected_off_diagonal <- n_petals * (n_petals - 1) / 2
+if (nrow(inspire_pairs) != expected_off_diagonal) {
+  warning(
+    "Expected ", expected_off_diagonal, " completed off-diagonal INSPIRE pairs, found ",
+    nrow(inspire_pairs), ". The matrix validation below will identify missing pairs."
+  )
+}
+
+inspire_similarity <- long_pairs_to_matrix(inspire_pairs, petal_names)
+validate_similarity(inspire_similarity, "INSPIRE similarity")
+
+write.csv(
+  inspire_similarity,
+  file.path(params$output_dir, "similarity_inspire.csv"),
+  quote = FALSE
+)
+```
+
+## INSPIRE distribution and high-confidence graph
+
+```{r inspire-distribution, fig.width=11, fig.height=4.5}
+inspire_long <- matrix_to_long(inspire_similarity, "INSPIRE")
+
+p_hist <- ggplot(inspire_long, aes(score)) +
+  geom_histogram(bins = 30, color = "white") +
+  geom_vline(xintercept = params$inspire_threshold, linetype = 2) +
+  labs(
+    title = "Off-diagonal INSPIRE similarity distribution",
+    subtitle = paste("Dashed line:", params$inspire_threshold),
+    x = "INSPIRE normalized score",
+    y = "Network pairs"
+  ) +
+  theme_bw()
+
+threshold_summary <- tibble(threshold = seq(0.50, 0.70, by = 0.05)) |>
+  rowwise() |>
+  mutate(
+    retained_edges = sum(inspire_long$score > threshold),
+    retained_fraction = retained_edges / nrow(inspire_long)
+  ) |>
+  ungroup()
+
+p_threshold <- ggplot(threshold_summary, aes(threshold, retained_edges)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Threshold sensitivity",
+    x = "Similarity threshold",
+    y = "Retained edges"
+  ) +
+  theme_bw()
+
+p_hist + p_threshold
+```
+
+```{r inspire-graph}
+high_edges <- inspire_long |>
+  filter(score > params$inspire_threshold) |>
+  select(from = petal_a, to = petal_b, weight = score)
+
+inspire_graph <- graph_from_data_frame(
+  high_edges,
+  directed = FALSE,
+  vertices = tibble(name = petal_names)
+)
+
+components_table <- tibble(
+  petal = names(components(inspire_graph)$membership),
+  component = unname(components(inspire_graph)$membership)
+) |>
+  group_by(component) |>
+  mutate(component_size = n()) |>
+  ungroup() |>
+  arrange(desc(component_size), component, petal)
+
+write_csv(
+  components_table,
+  file.path(params$output_dir, "inspire_threshold_components.csv")
+)
+
+components_table
+```
+
+# Comparison 2: GO gene-set similarity
+
+GO gene-pair scores are read from `go_pair_score` for the selected algorithm. Scores are normalized by the maximum score for that algorithm so the gene-level values lie in `[0,1]`. Petal-level GO similarity is then calculated by symmetric BMA over the petal gene sets.
+
+```{r go-similarity}
+gene_map <- dbGetQuery(
+  con,
+  "SELECT gene_symbol, uniprot_accession FROM gene_uniprot WHERE is_preferred = 1"
+)
+
+petal_genes <- dbGetQuery(
+  con,
+  "SELECT petal, gene_symbol FROM petal_gene ORDER BY petal, gene_symbol"
+)
+
+all_genes <- sort(unique(petal_genes$gene_symbol))
+if (!all(all_genes %in% gene_map$gene_symbol)) stop("A petal gene lacks a preferred UniProt mapping")
+
+protein_to_gene <- setNames(gene_map$gene_symbol, gene_map$uniprot_accession)
+
+go_rows <- dbGetQuery(
+  con,
+  "SELECT protein1, protein2, score FROM go_pair_score WHERE algorithm = ?",
+  params = list(params$go_algorithm)
+)
+if (nrow(go_rows) == 0) stop("No GO scores found for algorithm: ", params$go_algorithm)
+
+go_max <- max(go_rows$score, na.rm = TRUE)
+if (!is.finite(go_max) || go_max <= 0) stop("Invalid maximum GO score")
+
+gene_go <- matrix(NA_real_, length(all_genes), length(all_genes),
+                  dimnames = list(all_genes, all_genes))
+
+for (i in seq_len(nrow(go_rows))) {
+  g1 <- unname(protein_to_gene[go_rows$protein1[i]])
+  g2 <- unname(protein_to_gene[go_rows$protein2[i]])
+  if (!is.na(g1) && !is.na(g2) && g1 %in% all_genes && g2 %in% all_genes) {
+    value <- go_rows$score[i] / go_max
+    gene_go[g1, g2] <- value
+    gene_go[g2, g1] <- value
+  }
+}
+diag(gene_go) <- 1
+if (anyNA(gene_go)) stop("The GO gene-similarity matrix is incomplete")
+
+petal_gene_list <- split(petal_genes$gene_symbol, petal_genes$petal)
+go_similarity <- empty_similarity_matrix(petal_names)
+
+for (i in seq_along(petal_names)) {
+  for (j in i:length(petal_names)) {
+    a <- petal_names[i]
+    b <- petal_names[j]
+    score <- if (a == b) 1 else best_match_average(
+      petal_gene_list[[a]], petal_gene_list[[b]], gene_go
+    )
+    go_similarity[a, b] <- score
+    go_similarity[b, a] <- score
+  }
+}
+
+validate_similarity(go_similarity, "GO BMA similarity")
+write.csv(go_similarity, file.path(params$output_dir, "similarity_go_bma.csv"), quote = FALSE)
+```
+
+# Comparison 3: Pfam gene-set similarity
+
+For every pair of genes, Pfam similarity is Jaccard similarity between the two sets of unique Pfam accessions:
+
+\[
+J(A,B) = \frac{|A \cap B|}{|A \cup B|}
+\]
+
+If both proteins have no Pfam annotations, the pair receives zero rather than being treated as identical. Petal-level Pfam similarity is then calculated with symmetric BMA.
+
+```{r pfam-similarity}
+pfam_rows <- dbGetQuery(
+  con,
+  "SELECT uniprot_accession, pfam_accession FROM protein_pfam ORDER BY uniprot_accession, pfam_accession"
+)
+
+pfam_by_protein <- split(pfam_rows$pfam_accession, pfam_rows$uniprot_accession)
+gene_to_protein <- setNames(gene_map$uniprot_accession, gene_map$gene_symbol)
+
+pfam_jaccard <- function(gene_a, gene_b) {
+  protein_a <- unname(gene_to_protein[gene_a])
+  protein_b <- unname(gene_to_protein[gene_b])
+  a <- unique(pfam_by_protein[[protein_a]])
+  b <- unique(pfam_by_protein[[protein_b]])
+  if (is.null(a)) a <- character()
+  if (is.null(b)) b <- character()
+  union_size <- length(union(a, b))
+  if (union_size == 0) return(0)
+  length(intersect(a, b)) / union_size
+}
+
+gene_pfam <- matrix(0, length(all_genes), length(all_genes),
+                    dimnames = list(all_genes, all_genes))
+for (i in seq_along(all_genes)) {
+  for (j in i:length(all_genes)) {
+    value <- if (i == j) 1 else pfam_jaccard(all_genes[i], all_genes[j])
+    gene_pfam[i, j] <- value
+    gene_pfam[j, i] <- value
+  }
+}
+
+pfam_similarity <- empty_similarity_matrix(petal_names)
+for (i in seq_along(petal_names)) {
+  for (j in i:length(petal_names)) {
+    a <- petal_names[i]
+    b <- petal_names[j]
+    score <- if (a == b) 1 else best_match_average(
+      petal_gene_list[[a]], petal_gene_list[[b]], gene_pfam
+    )
+    pfam_similarity[a, b] <- score
+    pfam_similarity[b, a] <- score
+  }
+}
+
+validate_similarity(pfam_similarity, "Pfam BMA similarity")
+write.csv(pfam_similarity, file.path(params$output_dir, "similarity_pfam_bma.csv"), quote = FALSE)
+```
+
+# Compare the three similarity distributions
+
+```{r compare-distributions, fig.width=10, fig.height=5}
+all_long <- bind_rows(
+  matrix_to_long(inspire_similarity, "INSPIRE network alignment"),
+  matrix_to_long(go_similarity, "GO gene-set BMA"),
+  matrix_to_long(pfam_similarity, "Pfam gene-set BMA")
+)
+
+write_csv(all_long, file.path(params$output_dir, "all_similarity_pairs_long.csv"))
+
+ggplot(all_long, aes(score, fill = method)) +
+  geom_histogram(bins = 30, alpha = 0.55, position = "identity") +
+  facet_wrap(~method, ncol = 1, scales = "free_y") +
+  labs(x = "Similarity", y = "Petal pairs", title = "Off-diagonal similarity distributions") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+```{r matrix-correlations}
+score_wide <- all_long |>
+  select(petal_a, petal_b, method, score) |>
+  pivot_wider(names_from = method, values_from = score)
+
+pearson_correlations <- cor(
+  score_wide |> select(where(is.numeric)),
+  method = "pearson"
+)
+
+spearman_correlations <- cor(
+  score_wide |> select(where(is.numeric)),
+  method = "spearman"
+)
+
+pearson_correlations
+spearman_correlations
+
+write.csv(pearson_correlations, file.path(params$output_dir, "matrix_correlations_pearson.csv"))
+write.csv(spearman_correlations, file.path(params$output_dir, "matrix_correlations_spearman.csv"))
+```
+
+# Consensus clustering
+
+Consensus clustering is performed independently for each complete similarity matrix. Each iteration samples a fraction of petals, performs average-linkage hierarchical clustering on `1 - similarity`, and records whether co-sampled petals share a cluster. The final consensus matrix is the proportion of co-sampled iterations in which each pair co-clustered.
+
+The number of clusters is explored from 2 through `r params$max_k`. The automatic report selection uses the smallest PAC value, with smaller `k` preferred in a tie. This automatic choice should be reviewed together with the PAC curve, consensus heatmap, cluster sizes, and biological interpretation.
+
+```{r consensus-run}
+consensus_inspire <- run_consensus(
+  inspire_similarity, params$max_k, params$consensus_reps,
+  params$consensus_item_fraction, params$random_seed
+)
+consensus_go <- run_consensus(
+  go_similarity, params$max_k, params$consensus_reps,
+  params$consensus_item_fraction, params$random_seed + 10000
+)
+consensus_pfam <- run_consensus(
+  pfam_similarity, params$max_k, params$consensus_reps,
+  params$consensus_item_fraction, params$random_seed + 20000
+)
+
+consensus_metrics <- bind_rows(
+  mutate(consensus_inspire$metrics, method = "INSPIRE"),
+  mutate(consensus_go$metrics, method = "GO BMA"),
+  mutate(consensus_pfam$metrics, method = "Pfam BMA")
+)
+
+write_csv(consensus_metrics, file.path(params$output_dir, "consensus_metrics.csv"))
+consensus_metrics
+```
+
+```{r consensus-metrics-plot, fig.width=10, fig.height=4}
+p_pac <- ggplot(consensus_metrics, aes(k, PAC, color = method)) +
+  geom_line() + geom_point() +
+  scale_x_continuous(breaks = sort(unique(consensus_metrics$k))) +
+  labs(title = "Consensus clustering PAC", subtitle = "Lower PAC indicates a less ambiguous consensus matrix") +
+  theme_bw()
+
+p_within <- ggplot(consensus_metrics, aes(k, mean_within_consensus, color = method)) +
+  geom_line() + geom_point() +
+  scale_x_continuous(breaks = sort(unique(consensus_metrics$k))) +
+  labs(title = "Mean within-cluster consensus", y = "Mean consensus") +
+  theme_bw()
+
+p_pac + p_within
+```
+
+# Final cluster assignments
+
+```{r assignments}
+assignments <- tibble(
+  petal = petal_names,
+  inspire_cluster = unname(consensus_inspire$best$clusters[petal_names]),
+  go_cluster = unname(consensus_go$best$clusters[petal_names]),
+  pfam_cluster = unname(consensus_pfam$best$clusters[petal_names])
+)
+
+selected_k <- tibble(
+  method = c("INSPIRE", "GO BMA", "Pfam BMA"),
+  selected_k = c(
+    consensus_inspire$best$k,
+    consensus_go$best$k,
+    consensus_pfam$best$k
+  ),
+  PAC = c(
+    consensus_inspire$best$pac,
+    consensus_go$best$pac,
+    consensus_pfam$best$pac
+  )
+)
+
+write_csv(assignments, file.path(params$output_dir, "cluster_assignments.csv"))
+write_csv(selected_k, file.path(params$output_dir, "selected_cluster_counts.csv"))
+
+selected_k
+assignments
+```
+
+# Consensus-matrix heatmaps
+
+```{r consensus-heatmaps, fig.width=8, fig.height=8}
+pheatmap(
+  consensus_inspire$best$consensus,
+  clustering_distance_rows = as.dist(1 - consensus_inspire$best$consensus),
+  clustering_distance_cols = as.dist(1 - consensus_inspire$best$consensus),
+  main = paste0("INSPIRE consensus, k = ", consensus_inspire$best$k),
+  border_color = NA
+)
+```
+
+```{r consensus-go-heatmap, fig.width=8, fig.height=8}
+pheatmap(
+  consensus_go$best$consensus,
+  clustering_distance_rows = as.dist(1 - consensus_go$best$consensus),
+  clustering_distance_cols = as.dist(1 - consensus_go$best$consensus),
+  main = paste0("GO BMA consensus, k = ", consensus_go$best$k),
+  border_color = NA
+)
+```
+
+```{r consensus-pfam-heatmap, fig.width=8, fig.height=8}
+pheatmap(
+  consensus_pfam$best$consensus,
+  clustering_distance_rows = as.dist(1 - consensus_pfam$best$consensus),
+  clustering_distance_cols = as.dist(1 - consensus_pfam$best$consensus),
+  main = paste0("Pfam BMA consensus, k = ", consensus_pfam$best$k),
+  border_color = NA
+)
+```
+
+# Side-by-side similarity heatmaps using INSPIRE ordering
+
+```{r similarity-heatmaps, fig.width=15, fig.height=5}
+inspire_order <- hclust(as.dist(1 - inspire_similarity), method = "average")$order
+ordered_names <- rownames(inspire_similarity)[inspire_order]
+
+annotation <- data.frame(
+  INSPIRE = factor(assignments$inspire_cluster),
+  GO = factor(assignments$go_cluster),
+  Pfam = factor(assignments$pfam_cluster),
+  row.names = assignments$petal
+)
+
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(1, 3), mar = c(6, 6, 4, 2))
+image(
+  seq_along(ordered_names), seq_along(ordered_names),
+  inspire_similarity[ordered_names, ordered_names],
+  axes = FALSE, main = "INSPIRE", xlab = "", ylab = ""
+)
+axis(1, at = seq_along(ordered_names), labels = ordered_names, las = 2, cex.axis = 0.6)
+axis(2, at = seq_along(ordered_names), labels = ordered_names, las = 2, cex.axis = 0.6)
+image(
+  seq_along(ordered_names), seq_along(ordered_names),
+  go_similarity[ordered_names, ordered_names],
+  axes = FALSE, main = "GO gene-set BMA", xlab = "", ylab = ""
+)
+axis(1, at = seq_along(ordered_names), labels = ordered_names, las = 2, cex.axis = 0.6)
+axis(2, at = seq_along(ordered_names), labels = ordered_names, las = 2, cex.axis = 0.6)
+image(
+  seq_along(ordered_names), seq_along(ordered_names),
+  pfam_similarity[ordered_names, ordered_names],
+  axes = FALSE, main = "Pfam gene-set BMA", xlab = "", ylab = ""
+)
+axis(1, at = seq_along(ordered_names), labels = ordered_names, las = 2, cex.axis = 0.6)
+axis(2, at = seq_along(ordered_names), labels = ordered_names, las = 2, cex.axis = 0.6)
+par(old_par)
+```
+
+# Cluster-agreement summaries
+
+```{r cluster-agreement}
+adjusted_rand_index <- function(x, y) {
+  tab <- table(x, y)
+  choose2 <- function(z) z * (z - 1) / 2
+  sum_comb <- sum(choose2(tab))
+  row_comb <- sum(choose2(rowSums(tab)))
+  col_comb <- sum(choose2(colSums(tab)))
+  total_comb <- choose2(sum(tab))
+  expected <- row_comb * col_comb / total_comb
+  maximum <- (row_comb + col_comb) / 2
+  if (maximum == expected) return(1)
+  (sum_comb - expected) / (maximum - expected)
+}
+
+agreement <- tibble(
+  comparison = c("INSPIRE vs GO", "INSPIRE vs Pfam", "GO vs Pfam"),
+  adjusted_rand_index = c(
+    adjusted_rand_index(assignments$inspire_cluster, assignments$go_cluster),
+    adjusted_rand_index(assignments$inspire_cluster, assignments$pfam_cluster),
+    adjusted_rand_index(assignments$go_cluster, assignments$pfam_cluster)
+  )
+)
+
+write_csv(agreement, file.path(params$output_dir, "cluster_agreement_ari.csv"))
+agreement
+```
+
+# Reproducibility information
+
+```{r  }
+metadata <- dbGetQuery(
+  con,
+  "SELECT key, value FROM metadata ORDER BY key"
+)
+write_csv(metadata, file.path(params$output_dir, "database_metadata.csv"))
+metadata
+```
+
+```{r}
+DBI::dbDisconnect(con)
+
+```
+
+
+```{r reproducibility}
+sessionInfo()
+```

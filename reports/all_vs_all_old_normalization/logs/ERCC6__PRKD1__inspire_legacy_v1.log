@@ -1,0 +1,148 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite ERCC6 PRKD1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal ERCC6 (7)
+# 8 interactions in ERCC6
+Done adding UniProt and Pfam annotations for ERCC6.
+new petal PRKD1 (7)
+# 8 interactions in PRKD1
+Done adding UniProt and Pfam annotations for PRKD1.
+Petal Sizes: 7, 7
+[1;32mPetal Name: [1;33mERCC6
+[1;32mPetal Size: [1;33m7[0;31m
+APC
+BRCA1
+CDC73
+EP300
+ERCC6
+GSK3B
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 ERCC6	pp	BRCA1
+2 ERCC6	pp	CDC73
+3 ERCC6	pp	EP300
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 TCF7L2	pp	APC
+7 TCF7L2	pp	CDC73
+8 TCF7L2	pp	EP300
+[0m
+[1;32mPetal Name: [1;33mPRKD1
+[1;32mPetal Size: [1;33m7[0;31m
+APC
+ATF2
+CREB1
+GSK3B
+PRKD1
+SMAD4
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 GSK3B	pp	CREB1
+3 PRKD1	pp	ATF2
+4 PRKD1	pp	CREB1
+5 SMAD4	pp	APC
+6 SMAD4	pp	ATF2
+7 TCF7L2	pp	APC
+8 TCF7L2	pp	CREB1
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mERCC6 - PRKD1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 16
+counterPetal2 16
+counterPetal1*counterPetal2 256
+(*AGE).size()=256
+[0m---- 
+[1;33mAGE nodes: 256[0m
+Allocate AGEgraph :  256 x 256	65536 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.180119
+0 222 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+222 87 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. CREB1::B2. TCF7L2}[0m
+222 205 cost: 465
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. SMAD4::B2. ATF2}[0m
+222 153 cost: 487
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. CDC73] ---  [B1. GSK3B::B2. CREB1}[0m
+
+Displayed tree score: 0.180119
+
+18th run results (1) [new minumum]:0.180193
+18 184 cost: 100
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+184 53 cost: 217
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. BRCA1::A2. GSK3B] ---  [B1. CREB1::B2. GSK3B}[0m
+184 237 cost: 465
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. SMAD4::B2. ATF2}[0m
+184 139 cost: 555
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. BRCA1] ---  [B1. PRKD1::B2. CREB1}[0m
+237 67 cost: 645
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. SMAD4::B2. ATF2}[0m
+[0;36m		[A1. CDC73::A2. ERCC6] ---  [B1. ATF2::B2. PRKD1}[0m
+
+Displayed tree score: 0.180193
+
+53th run results (2) [new minumum]:0.192219
+53 184 cost: 217
+[0;36m		[A1. BRCA1::A2. GSK3B] ---  [B1. CREB1::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+184 18 cost: 100
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+18 239 cost: 217
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. TCF7L2::B2. CREB1}[0m
+18 70 cost: 555
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. CDC73::A2. ERCC6] ---  [B1. CREB1::B2. PRKD1}[0m
+70 138 cost: 769
+[0;36m		[A1. CDC73::A2. ERCC6] ---  [B1. CREB1::B2. PRKD1}[0m
+[0;36m		[A1. ERCC6::A2. BRCA1] ---  [B1. PRKD1::B2. ATF2}[0m
+
+Displayed tree score: 0.192219
+
+94th run results (3) [new minumum]:0.200579
+94 0 cost: 465
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+0 201 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. CREB1}[0m
+0 220 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+0 116 cost: 465
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. EP300::A2. TCF7L2] ---  [B1. ATF2::B2. SMAD4}[0m
+0 38 cost: 555
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. BRCA1::A2. ERCC6] ---  [B1. CREB1::B2. PRKD1}[0m
+116 170 cost: 645
+[0;36m		[A1. EP300::A2. TCF7L2] ---  [B1. ATF2::B2. SMAD4}[0m
+[0;36m		[A1. ERCC6::A2. EP300] ---  [B1. PRKD1::B2. ATF2}[0m
+
+Displayed tree score: 0.200579
+
+Petal1:8	Petal2:8	treecost: 2564	 tree size:6
+$RESULT$	ERCC6	PRKD1	norm_score:	0.200579
+[0m
+[0 min 0 sec] All done in 

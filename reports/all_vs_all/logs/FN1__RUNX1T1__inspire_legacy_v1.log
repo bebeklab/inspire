@@ -1,0 +1,125 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite FN1 RUNX1T1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+GO normalization in use: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal FN1 (10)
+# 15 interactions in FN1
+Done adding UniProt and Pfam annotations for FN1.
+new petal RUNX1T1 (4)
+# 3 interactions in RUNX1T1
+Done adding UniProt and Pfam annotations for RUNX1T1.
+Petal Sizes: 10, 4
+[1;32mPetal Name: [1;33mFN1
+[1;32mPetal Size: [1;33m10[0;31m
+APC
+BMPR2
+CREB1
+FN1
+GSK3B
+HIF1A
+SMAD4
+TCF7L2
+ZEB1
+ZEB2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 FN1	pp	BMPR2
+2 FN1	pp	CREB1
+3 GSK3B	pp	APC
+4 GSK3B	pp	CREB1
+5 HIF1A	pp	FN1
+6 HIF1A	pp	GSK3B
+7 SMAD4	pp	APC
+8 SMAD4	pp	BMPR2
+9 SMAD4	pp	HIF1A
+10 TCF7L2	pp	APC
+11 TCF7L2	pp	CREB1
+12 ZEB1	pp	FN1
+13 ZEB1	pp	SMAD4
+14 ZEB2	pp	FN1
+15 ZEB2	pp	SMAD4
+[0m
+[1;32mPetal Name: [1;33mRUNX1T1
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+RUNX1T1
+SMAD4
+SP1
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 SMAD4	pp	APC
+2 SP1	pp	RUNX1T1
+3 SP1	pp	SMAD4
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mFN1 - RUNX1T1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 30
+counterPetal2 6
+counterPetal1*counterPetal2 180
+(*AGE).size()=180
+[0m---- 
+[1;33mAGE nodes: 180[0m
+Allocate AGEgraph :  180 x 180	32400 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.128866
+0 93 cost: 500
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. SMAD4::B2. SP1}[0m
+93 112 cost: 1052
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. SMAD4::B2. SP1}[0m
+[0;36m		[A1. HIF1A::A2. SMAD4] ---  [B1. SP1::B2. RUNX1T1}[0m
+
+Displayed tree score: 0.128866
+
+3th run results (1) [new minumum]:0.136612
+3 114 cost: 555
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. SMAD4::B2. SP1}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. APC::B2. SMAD4}[0m
+3 88 cost: 909
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. SMAD4::B2. SP1}[0m
+[0;36m		[A1. GSK3B::A2. CREB1] ---  [B1. SP1::B2. RUNX1T1}[0m
+
+Displayed tree score: 0.136612
+
+11th run results (2) [new minumum]:0.141945
+11 122 cost: 500
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. SP1::B2. SMAD4}[0m
+[0;36m		[A1. SMAD4::A2. BMPR2] ---  [B1. SMAD4::B2. APC}[0m
+11 145 cost: 909
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. SP1::B2. SMAD4}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. RUNX1T1::B2. SP1}[0m
+
+Displayed tree score: 0.141945
+
+29th run results (3) [new minumum]:0.161943
+29 116 cost: 235
+[0;36m		[A1. BMPR2::A2. SMAD4] ---  [B1. SP1::B2. SMAD4}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+116 91 cost: 1000
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. RUNX1T1::B2. SP1}[0m
+
+Displayed tree score: 0.161943
+
+91th run results (4) [new minumum]:0.169062
+91 116 cost: 1000
+[0;36m		[A1. GSK3B::A2. HIF1A] ---  [B1. RUNX1T1::B2. SP1}[0m
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+116 179 cost: 183
+[0;36m		[A1. SMAD4::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+[0;36m		[A1. ZEB2::A2. SMAD4] ---  [B1. SP1::B2. SMAD4}[0m
+
+Displayed tree score: 0.169062
+
+Petal1:15	Petal2:3	treecost: 1183	 tree size:2
+$RESULT$	FN1	RUNX1T1	norm_score:	0.169062
+[0m
+[0 min 0 sec] All done in 

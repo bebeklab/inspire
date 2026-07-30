@@ -1,0 +1,94 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite ERCC6 NAV3 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal ERCC6 (7)
+# 8 interactions in ERCC6
+Done adding UniProt and Pfam annotations for ERCC6.
+new petal NAV3 (4)
+# 3 interactions in NAV3
+Done adding UniProt and Pfam annotations for NAV3.
+Petal Sizes: 7, 4
+[1;32mPetal Name: [1;33mERCC6
+[1;32mPetal Size: [1;33m7[0;31m
+APC
+BRCA1
+CDC73
+EP300
+ERCC6
+GSK3B
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 ERCC6	pp	BRCA1
+2 ERCC6	pp	CDC73
+3 ERCC6	pp	EP300
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 TCF7L2	pp	APC
+7 TCF7L2	pp	CDC73
+8 TCF7L2	pp	EP300
+[0m
+[1;32mPetal Name: [1;33mNAV3
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+CDC42
+MEF2C
+NAV3
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC42	pp	APC
+2 MEF2C	pp	CDC42
+3 NAV3	pp	MEF2C
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mERCC6 - NAV3[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 16
+counterPetal2 6
+counterPetal1*counterPetal2 96
+(*AGE).size()=96
+[0m---- 
+[1;33mAGE nodes: 96[0m
+Allocate AGEgraph :  96 x 96	9216 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.059577
+0 74 cost: 500
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. CDC42::B2. MEF2C}[0m
+74 16 cost: 2857
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. CDC42::B2. MEF2C}[0m
+[0;36m		[A1. BRCA1::A2. ERCC6] ---  [B1. MEF2C::B2. NAV3}[0m
+
+Displayed tree score: 0.059577
+
+1th run results (1) [new minumum]:0.182648
+1 81 cost: 540
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. CDC42::B2. APC}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. MEF2C::B2. CDC42}[0m
+81 47 cost: 555
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. MEF2C::B2. CDC42}[0m
+[0;36m		[A1. EP300::A2. TCF7L2] ---  [B1. NAV3::B2. MEF2C}[0m
+
+Displayed tree score: 0.182648
+
+2th run results (2) [new minumum]:0.185185
+2 76 cost: 540
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. CDC42::B2. MEF2C}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. MEF2C::B2. NAV3}[0m
+2 78 cost: 540
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. CDC42::B2. MEF2C}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. APC::B2. CDC42}[0m
+
+Displayed tree score: 0.185185
+
+Petal1:8	Petal2:3	treecost: 1080	 tree size:2
+$RESULT$	ERCC6	NAV3	norm_score:	0.185185
+[0m
+[0 min 0 sec] All done in 

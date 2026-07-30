@@ -1,0 +1,237 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite BCL9 PTEN inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+GO normalization in use: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal BCL9 (4)
+# 3 interactions in BCL9
+Done adding UniProt and Pfam annotations for BCL9.
+new petal PTEN (43)
+# 94 interactions in PTEN
+Done adding UniProt and Pfam annotations for PTEN.
+Petal Sizes: 4, 43
+[1;32mPetal Name: [1;33mBCL9
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+BCL9
+CDC73
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC73	pp	BCL9
+2 TCF7L2	pp	APC
+3 TCF7L2	pp	CDC73
+[0m
+[1;32mPetal Name: [1;33mPTEN
+[1;32mPetal Size: [1;33m43[0;31m
+AGO1
+APC
+ATM
+ATRX
+BCL2
+BMPR1A
+BRAF
+BTRC
+CCDC6
+CDC42
+CDKN1B
+CHUK
+CREB1
+EGFR
+ERBIN
+FBXW11
+FBXW7
+FOXO1
+FOXO3
+GSK3B
+HIF1A
+IQGAP1
+ITGB1
+JAK2
+KRAS
+LRP6
+LRRK2
+MAPK1
+MDM2
+NFE2L2
+PDPK1
+PIK3CB
+PIK3R1
+PTEN
+RBPJ
+SIRT1
+SMAD2
+SMAD4
+TBL1XR1
+TCF7L2
+TNKS
+YAP1
+ZEB1
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 BTRC	pp	APC
+2 CCDC6	pp	APC
+3 CCDC6	pp	BRAF
+4 CDC42	pp	APC
+5 CHUK	pp	BTRC
+6 ERBIN	pp	APC
+7 ERBIN	pp	CDC42
+8 ERBIN	pp	EGFR
+9 FBXW11	pp	APC
+10 FBXW7	pp	BTRC
+11 FBXW7	pp	CCDC6
+12 GSK3B	pp	APC
+13 GSK3B	pp	BRAF
+14 GSK3B	pp	BTRC
+15 GSK3B	pp	CDKN1B
+16 GSK3B	pp	CREB1
+17 GSK3B	pp	FBXW11
+18 GSK3B	pp	FBXW7
+19 GSK3B	pp	FOXO1
+20 GSK3B	pp	FOXO3
+21 HIF1A	pp	GSK3B
+22 IQGAP1	pp	APC
+23 IQGAP1	pp	EGFR
+24 ITGB1	pp	CDC42
+25 KRAS	pp	APC
+26 KRAS	pp	BCL2
+27 KRAS	pp	CDC42
+28 KRAS	pp	EGFR
+29 KRAS	pp	HIF1A
+30 KRAS	pp	JAK2
+31 LRP6	pp	APC
+32 LRP6	pp	GSK3B
+33 LRRK2	pp	AGO1
+34 LRRK2	pp	APC
+35 LRRK2	pp	HIF1A
+36 MAPK1	pp	GSK3B
+37 MDM2	pp	GSK3B
+38 NFE2L2	pp	GSK3B
+39 PDPK1	pp	GSK3B
+40 PIK3CB	pp	CDC42
+41 PIK3R1	pp	KRAS
+42 PTEN	pp	AGO1
+43 PTEN	pp	ATM
+44 PTEN	pp	ATRX
+45 PTEN	pp	BCL2
+46 PTEN	pp	BMPR1A
+47 PTEN	pp	BRAF
+48 PTEN	pp	CDC42
+49 PTEN	pp	CDKN1B
+50 PTEN	pp	CHUK
+51 PTEN	pp	CREB1
+52 PTEN	pp	EGFR
+53 PTEN	pp	FBXW7
+54 PTEN	pp	FOXO1
+55 PTEN	pp	FOXO3
+56 PTEN	pp	GSK3B
+57 PTEN	pp	HIF1A
+58 PTEN	pp	ITGB1
+59 PTEN	pp	JAK2
+60 PTEN	pp	MAPK1
+61 PTEN	pp	MDM2
+62 PTEN	pp	NFE2L2
+63 PTEN	pp	PDPK1
+64 PTEN	pp	PIK3CB
+65 PTEN	pp	PIK3R1
+66 RBPJ	pp	PTEN
+67 SIRT1	pp	GSK3B
+68 SIRT1	pp	PTEN
+69 SMAD2	pp	CDC42
+70 SMAD2	pp	ERBIN
+71 SMAD2	pp	GSK3B
+72 SMAD2	pp	PTEN
+73 SMAD4	pp	APC
+74 SMAD4	pp	ATM
+75 SMAD4	pp	BCL2
+76 SMAD4	pp	BMPR1A
+77 SMAD4	pp	CDC42
+78 SMAD4	pp	HIF1A
+79 SMAD4	pp	MAPK1
+80 SMAD4	pp	PTEN
+81 SMAD4	pp	RBPJ
+82 SMAD4	pp	SMAD2
+83 TBL1XR1	pp	APC
+84 TBL1XR1	pp	RBPJ
+85 TCF7L2	pp	APC
+86 TCF7L2	pp	CREB1
+87 TCF7L2	pp	PTEN
+88 TNKS	pp	APC
+89 TNKS	pp	ATRX
+90 TNKS	pp	PTEN
+91 YAP1	pp	GSK3B
+92 YAP1	pp	PTEN
+93 ZEB1	pp	PTEN
+94 ZEB1	pp	SMAD4
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mBCL9 - PTEN[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 6
+counterPetal2 188
+counterPetal1*counterPetal2 1128
+(*AGE).size()=1128
+[0m---- 
+[1;33mAGE nodes: 1128[0m
+Allocate AGEgraph :  1128 x 1128	1272384 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.135593
+0 1048 cost: 606
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. AGO1::B2. LRRK2}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. LRRK2::B2. APC}[0m
+1048 386 cost: 869
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. LRRK2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. BCL9] ---  [B1. APC::B2. LRP6}[0m
+
+Displayed tree score: 0.135593
+
+4th run results (1) [new minumum]:0.138026
+4 980 cost: 540
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. CDC42::B2. PTEN}[0m
+980 509 cost: 909
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. CDC73::A2. BCL9] ---  [B1. PTEN::B2. EGFR}[0m
+
+Displayed tree score: 0.138026
+
+7th run results (2) [new minumum]:0.146092
+7 1012 cost: 500
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. GSK3B::B2. CREB1}[0m
+1012 425 cost: 869
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. GSK3B::B2. CREB1}[0m
+[0;36m		[A1. CDC73::A2. BCL9] ---  [B1. CREB1::B2. TCF7L2}[0m
+
+Displayed tree score: 0.146092
+
+14th run results (3) [new minumum]:0.190476
+14 1119 cost: 217
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. TCF7L2::B2. CREB1}[0m
+14 423 cost: 833
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. CDC73::A2. BCL9] ---  [B1. CREB1::B2. GSK3B}[0m
+
+Displayed tree score: 0.190476
+
+241th run results (4) [new minumum]:0.20284
+241 930 cost: 769
+[0;36m		[A1. BCL9::A2. CDC73] ---  [B1. EGFR::B2. PTEN}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+930 613 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. CREB1::B2. TCF7L2}[0m
+
+Displayed tree score: 0.20284
+
+Petal1:3	Petal2:94	treecost: 986	 tree size:2
+$RESULT$	BCL9	PTEN	norm_score:	0.20284
+[0m
+[0 min 0 sec] All done in 

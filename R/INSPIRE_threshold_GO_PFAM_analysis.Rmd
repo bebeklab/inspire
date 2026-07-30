@@ -1,0 +1,576 @@
+---
+title: "INSPIRE Threshold Clustering with GO and Pfam Comparisons"
+author: "Gurkan Bebek"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: hide
+params:
+  database: "../database/inspire.sqlite"
+  inspire_log_dir: "../reports/all_vs_all/logs"
+  go_algorithm: "inspire_legacy_v1"
+  inspire_threshold: 0.60
+  output_dir: "../reports/clustering"
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+packages <- c(
+  "DBI", "RSQLite", "dplyr", "tidyr", "readr", "stringr",
+  "ggplot2", "igraph", "pheatmap", "patchwork"
+)
+missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing)) stop("Install missing packages: ", paste(missing, collapse = ", "))
+
+library(DBI)
+library(RSQLite)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(stringr)
+library(ggplot2)
+library(igraph)
+library(pheatmap)
+library(patchwork)
+
+dir.create(params$output_dir, recursive = TRUE, showWarnings = FALSE)
+set.seed(20260729)
+```
+
+# Analysis plan
+
+This report compares petals by three independent methods:
+
+1. **INSPIRE**: normalized network-alignment scores from the C++ logs.
+2. **GO**: only genes in the two petals being compared are used. Every gene is matched to its best-scoring gene in the opposite petal, followed by a symmetric best-match average.
+3. **Pfam**: only genes in the two petals being compared are used. Gene-pair Pfam similarity is Jaccard similarity, followed by the same symmetric best-match average.
+
+INSPIRE is clustered primarily by retaining direct scores greater than `r params$inspire_threshold`. Complete-linkage threshold clusters, connected components, and weighted Walktrap communities are shown. GO and Pfam are displayed with ordinary hierarchical clustering.
+
+# Database and helper functions
+
+```{r database}
+if (!file.exists(params$database)) stop("Database not found: ", params$database)
+con <- DBI::dbConnect(RSQLite::SQLite(), params$database)
+
+if (DBI::dbGetQuery(con, "PRAGMA integrity_check")[[1]][1] != "ok") {
+  stop("SQLite integrity check failed")
+}
+if (nrow(DBI::dbGetQuery(con, "PRAGMA foreign_key_check")) > 0) {
+  stop("SQLite foreign-key check failed")
+}
+
+petals <- DBI::dbGetQuery(
+  con,
+  "SELECT petal, gene_count, edge_count FROM petal ORDER BY petal"
+)
+petal_names <- petals$petal
+n_petals <- length(petal_names)
+
+petal_genes <- DBI::dbGetQuery(
+  con,
+  paste(
+    "SELECT pg.petal, pg.gene_symbol, gu.uniprot_accession",
+    "FROM petal_gene pg",
+    "JOIN gene_uniprot gu",
+    "  ON gu.gene_symbol = pg.gene_symbol",
+    " AND gu.is_preferred = 1",
+    "ORDER BY pg.petal, pg.gene_symbol"
+  )
+)
+
+if (nrow(petal_genes) != sum(petals$gene_count)) {
+  stop("Not every petal gene has exactly one preferred UniProt accession")
+}
+
+petals
+```
+
+```{r helpers}
+new_similarity_matrix <- function(names) {
+  m <- matrix(NA_real_, length(names), length(names), dimnames = list(names, names))
+  diag(m) <- 1
+  m
+}
+
+validate_similarity <- function(m, label) {
+  if (anyNA(m)) stop(label, " contains missing values")
+  if (max(abs(m - t(m))) > 1e-10) stop(label, " is not symmetric")
+  if (any(m < -1e-10 | m > 1 + 1e-10)) stop(label, " is outside [0,1]")
+}
+
+matrix_to_long <- function(m, method) {
+  as.data.frame(as.table(m), stringsAsFactors = FALSE) |>
+    transmute(
+      petal_a = as.character(Var1),
+      petal_b = as.character(Var2),
+      score = as.numeric(Freq),
+      method = method
+    ) |>
+    filter(petal_a < petal_b)
+}
+
+symmetric_best_match_average <- function(cross_scores) {
+  if (anyNA(cross_scores)) stop("Cross-petal gene score matrix contains missing values")
+  forward <- mean(apply(cross_scores, 1, max))
+  reverse <- mean(apply(cross_scores, 2, max))
+  (forward + reverse) / 2
+}
+
+adjusted_rand_index <- function(x, y) {
+  tab <- table(x, y)
+  choose2 <- function(z) z * (z - 1) / 2
+  observed <- sum(choose2(tab))
+  rows <- sum(choose2(rowSums(tab)))
+  cols <- sum(choose2(colSums(tab)))
+  total <- choose2(sum(tab))
+  expected <- rows * cols / total
+  maximum <- (rows + cols) / 2
+  if (maximum == expected) return(1)
+  (observed - expected) / (maximum - expected)
+}
+```
+
+# 1. INSPIRE similarity matrix
+
+```{r inspire-matrix}
+log_files <- list.files(params$inspire_log_dir, pattern = "\\.log$", full.names = TRUE)
+if (!length(log_files)) stop("No INSPIRE logs found")
+
+parse_log <- function(path) {
+  text <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  hits <- stringr::str_match_all(
+    text,
+    "\\$RESULT\\$\\s+(\\S+)\\s+(\\S+)\\s+norm_score:\\s+(-?[0-9.]+(?:[eE][+-]?[0-9]+)?)"
+  )[[1]]
+  if (!nrow(hits)) return(NULL)
+  hit <- hits[nrow(hits), ]
+  tibble(petal_a = hit[2], petal_b = hit[3], score = as.numeric(hit[4]))
+}
+
+inspire_pairs <- bind_rows(lapply(log_files, parse_log)) |>
+  filter(petal_a != petal_b) |>
+  mutate(a = pmin(petal_a, petal_b), b = pmax(petal_a, petal_b)) |>
+  group_by(a, b) |>
+  summarise(score = last(score), .groups = "drop")
+
+inspire_similarity <- new_similarity_matrix(petal_names)
+for (i in seq_len(nrow(inspire_pairs))) {
+  a <- inspire_pairs$a[i]
+  b <- inspire_pairs$b[i]
+  if (a %in% petal_names && b %in% petal_names) {
+    inspire_similarity[a, b] <- inspire_pairs$score[i]
+    inspire_similarity[b, a] <- inspire_pairs$score[i]
+  }
+}
+diag(inspire_similarity) <- 1
+validate_similarity(inspire_similarity, "INSPIRE")
+
+write.csv(inspire_similarity,
+          file.path(params$output_dir, "similarity_inspire.csv"),
+          quote = FALSE)
+```
+
+# 2. GO similarity using only the two petals' genes
+
+GO scores are queried only for the cross-product of genes in the current petal pair. The maximum GO score is used only as a fixed normalization constant.
+
+```{r go-matrix}
+go_max <- DBI::dbGetQuery(
+  con,
+  "SELECT MAX(score) AS maximum FROM go_pair_score WHERE algorithm = ?",
+  params = list(params$go_algorithm)
+)$maximum[1]
+if (!is.finite(go_max) || go_max <= 0) stop("Invalid GO normalization maximum")
+
+get_go_cross_scores <- function(petal_a, petal_b) {
+  a <- petal_genes |> filter(petal == petal_a) |>
+    select(gene_a = gene_symbol, protein_a = uniprot_accession)
+  b <- petal_genes |> filter(petal == petal_b) |>
+    select(gene_b = gene_symbol, protein_b = uniprot_accession)
+
+  requested <- tidyr::crossing(a, b) |>
+    mutate(protein1 = pmin(protein_a, protein_b),
+           protein2 = pmax(protein_a, protein_b))
+
+  scores <- DBI::dbGetQuery(
+    con,
+    "SELECT protein1, protein2, score FROM go_pair_score WHERE algorithm = ?",
+    params = list(params$go_algorithm)
+  )
+
+  requested <- requested |>
+    left_join(scores, by = c("protein1", "protein2"))
+  if (anyNA(requested$score)) {
+    bad <- requested |> filter(is.na(score)) |> slice(1)
+    stop("Missing GO score for ", bad$gene_a, " and ", bad$gene_b)
+  }
+
+  matrix(
+    requested$score / go_max,
+    nrow = nrow(a), ncol = nrow(b), byrow = FALSE,
+    dimnames = list(a$gene_a, b$gene_b)
+  )
+}
+
+go_similarity <- new_similarity_matrix(petal_names)
+go_details <- list()
+idx <- 1L
+for (i in seq_along(petal_names)) {
+  for (j in i:length(petal_names)) {
+    a <- petal_names[i]
+    b <- petal_names[j]
+    if (a == b) {
+      value <- 1
+    } else {
+      cross <- get_go_cross_scores(a, b)
+      value <- symmetric_best_match_average(cross)
+      go_details[[idx]] <- as.data.frame(as.table(cross)) |>
+        transmute(petal_a = a, petal_b = b,
+                  gene_a = as.character(Var1), gene_b = as.character(Var2),
+                  normalized_go_score = as.numeric(Freq))
+      idx <- idx + 1L
+    }
+    go_similarity[a, b] <- value
+    go_similarity[b, a] <- value
+  }
+}
+validate_similarity(go_similarity, "GO")
+
+write.csv(go_similarity,
+          file.path(params$output_dir, "similarity_go_petal_genes.csv"),
+          quote = FALSE)
+write_csv(bind_rows(go_details),
+          file.path(params$output_dir, "go_cross_petal_gene_scores.csv"))
+```
+
+# 3. Pfam similarity using only the two petals' genes
+
+```{r pfam-matrix}
+pfam_rows <- DBI::dbGetQuery(
+  con,
+  "SELECT uniprot_accession, pfam_accession FROM protein_pfam ORDER BY uniprot_accession, pfam_accession"
+)
+pfam_by_protein <- split(pfam_rows$pfam_accession, pfam_rows$uniprot_accession)
+
+pfam_jaccard <- function(protein_a, protein_b) {
+  x <- unique(pfam_by_protein[[protein_a]])
+  y <- unique(pfam_by_protein[[protein_b]])
+  if (is.null(x)) x <- character()
+  if (is.null(y)) y <- character()
+  u <- union(x, y)
+  if (!length(u)) return(0)
+  length(intersect(x, y)) / length(u)
+}
+
+get_pfam_cross_scores <- function(petal_a, petal_b) {
+  a <- petal_genes |> filter(petal == petal_a) |>
+    select(gene_a = gene_symbol, protein_a = uniprot_accession)
+  b <- petal_genes |> filter(petal == petal_b) |>
+    select(gene_b = gene_symbol, protein_b = uniprot_accession)
+
+  requested <- tidyr::crossing(a, b) |>
+    rowwise() |>
+    mutate(score = pfam_jaccard(protein_a, protein_b)) |>
+    ungroup()
+
+  matrix(
+    requested$score,
+    nrow = nrow(a), ncol = nrow(b), byrow = FALSE,
+    dimnames = list(a$gene_a, b$gene_b)
+  )
+}
+
+pfam_similarity <- new_similarity_matrix(petal_names)
+pfam_details <- list()
+idx <- 1L
+for (i in seq_along(petal_names)) {
+  for (j in i:length(petal_names)) {
+    a <- petal_names[i]
+    b <- petal_names[j]
+    if (a == b) {
+      value <- 1
+    } else {
+      cross <- get_pfam_cross_scores(a, b)
+      value <- symmetric_best_match_average(cross)
+      pfam_details[[idx]] <- as.data.frame(as.table(cross)) |>
+        transmute(petal_a = a, petal_b = b,
+                  gene_a = as.character(Var1), gene_b = as.character(Var2),
+                  pfam_jaccard = as.numeric(Freq))
+      idx <- idx + 1L
+    }
+    pfam_similarity[a, b] <- value
+    pfam_similarity[b, a] <- value
+  }
+}
+validate_similarity(pfam_similarity, "Pfam")
+
+write.csv(pfam_similarity,
+          file.path(params$output_dir, "similarity_pfam_petal_genes.csv"),
+          quote = FALSE)
+write_csv(bind_rows(pfam_details),
+          file.path(params$output_dir, "pfam_cross_petal_gene_scores.csv"))
+```
+
+# Similarity distributions
+
+```{r distributions, fig.width=10, fig.height=7}
+all_scores <- bind_rows(
+  matrix_to_long(inspire_similarity, "INSPIRE"),
+  matrix_to_long(go_similarity, "GO petal genes"),
+  matrix_to_long(pfam_similarity, "Pfam petal genes")
+)
+write_csv(all_scores, file.path(params$output_dir, "all_similarity_pairs_long.csv"))
+
+ggplot(all_scores, aes(score)) +
+  geom_histogram(bins = 30, color = "white") +
+  facet_wrap(~method, ncol = 1, scales = "free_y") +
+  theme_bw() +
+  labs(title = "Off-diagonal petal similarities", x = "Similarity", y = "Pairs")
+```
+
+# INSPIRE threshold clustering
+
+## Complete-linkage clusters at the selected threshold
+
+Complete linkage is the strict interpretation: all members of a cluster must remain close enough that the maximum within-cluster distance is no greater than `1 - threshold`.
+
+```{r inspire-complete-linkage, fig.width=10, fig.height=6}
+cutoff <- params$inspire_threshold
+inspire_complete_tree <- hclust(as.dist(1 - inspire_similarity), method = "complete")
+inspire_complete_clusters <- cutree(inspire_complete_tree, h = 1 - cutoff)
+
+complete_assignments <- tibble(
+  petal = names(inspire_complete_clusters),
+  cluster = as.integer(inspire_complete_clusters)
+) |>
+  group_by(cluster) |>
+  mutate(cluster_size = n()) |>
+  ungroup() |>
+  arrange(desc(cluster_size), cluster, petal)
+
+write_csv(complete_assignments,
+          file.path(params$output_dir, "inspire_complete_linkage_threshold_clusters.csv"))
+
+plot(inspire_complete_tree,
+     main = paste0("INSPIRE complete linkage; score cutoff = ", cutoff),
+     xlab = "", sub = "", hang = -1)
+abline(h = 1 - cutoff, col = "red", lty = 2, lwd = 2)
+
+complete_assignments
+```
+
+## Thresholded heatmap
+
+```{r inspire-threshold-heatmap, fig.width=9, fig.height=9}
+threshold_matrix <- inspire_similarity
+threshold_matrix[threshold_matrix <= cutoff] <- 0
+diag(threshold_matrix) <- 1
+
+order_names <- inspire_complete_tree$labels[inspire_complete_tree$order]
+annotation <- data.frame(
+  ThresholdCluster = factor(inspire_complete_clusters[order_names]),
+  row.names = order_names
+)
+
+pheatmap(
+  threshold_matrix[order_names, order_names],
+  cluster_rows = FALSE,
+  cluster_cols = FALSE,
+  annotation_row = annotation,
+  annotation_col = annotation,
+  main = paste0("INSPIRE scores above ", cutoff),
+  color = colorRampPalette(c("white", "#fee8c8", "#fdbb84", "#e34a33", "#7f0000"))(100),
+  border_color = NA
+)
+```
+
+## Connected components and weighted Walktrap communities
+
+```{r inspire-graph, fig.width=10, fig.height=8}
+inspire_long <- matrix_to_long(inspire_similarity, "INSPIRE")
+high_edges <- inspire_long |>
+  filter(score > cutoff) |>
+  transmute(from = petal_a, to = petal_b, weight = score)
+
+high_graph <- graph_from_data_frame(
+  high_edges,
+  directed = FALSE,
+  vertices = tibble(name = petal_names)
+)
+
+component_membership <- components(high_graph)$membership
+component_assignments <- tibble(
+  petal = names(component_membership),
+  component = as.integer(component_membership)
+) |>
+  group_by(component) |>
+  mutate(component_size = n()) |>
+  ungroup() |>
+  arrange(desc(component_size), component, petal)
+
+write_csv(component_assignments,
+          file.path(params$output_dir, "inspire_threshold_connected_components.csv"))
+
+if (ecount(high_graph) > 0) {
+  walktrap <- cluster_walktrap(high_graph, weights = E(high_graph)$weight)
+  walktrap_membership <- membership(walktrap)
+} else {
+  walktrap_membership <- setNames(seq_along(petal_names), petal_names)
+}
+
+walktrap_assignments <- tibble(
+  petal = names(walktrap_membership),
+  cluster = as.integer(walktrap_membership)
+) |>
+  group_by(cluster) |>
+  mutate(cluster_size = n()) |>
+  ungroup() |>
+  arrange(desc(cluster_size), cluster, petal)
+
+write_csv(walktrap_assignments,
+          file.path(params$output_dir, "inspire_threshold_walktrap_clusters.csv"))
+
+set.seed(20260729)
+plot(
+  high_graph,
+  layout = layout_with_fr(high_graph),
+  vertex.color = walktrap_membership[V(high_graph)$name],
+  vertex.size = 22,
+  vertex.label.cex = 0.8,
+  edge.width = 1 + 5 * E(high_graph)$weight,
+  edge.color = adjustcolor("grey30", alpha.f = 0.55),
+  main = paste0("Weighted INSPIRE graph; score > ", cutoff)
+)
+```
+
+# Threshold sensitivity
+
+```{r threshold-sensitivity, fig.width=11, fig.height=4.5}
+thresholds <- seq(0.50, 0.75, by = 0.025)
+threshold_sensitivity <- bind_rows(lapply(thresholds, function(t) {
+  edges <- inspire_long |> filter(score > t)
+  g <- graph_from_data_frame(
+    edges |> transmute(from = petal_a, to = petal_b, weight = score),
+    directed = FALSE,
+    vertices = tibble(name = petal_names)
+  )
+  complete_clusters <- cutree(
+    hclust(as.dist(1 - inspire_similarity), method = "complete"),
+    h = 1 - t
+  )
+  tibble(
+    threshold = t,
+    retained_edges = nrow(edges),
+    connected_components = components(g)$no,
+    largest_component = max(components(g)$csize),
+    isolated_petals = sum(degree(g) == 0),
+    complete_linkage_clusters = length(unique(complete_clusters))
+  )
+}))
+
+write_csv(threshold_sensitivity,
+          file.path(params$output_dir, "inspire_threshold_sensitivity.csv"))
+
+p1 <- ggplot(threshold_sensitivity, aes(threshold, retained_edges)) +
+  geom_line() + geom_point() +
+  geom_vline(xintercept = cutoff, linetype = 2) +
+  theme_bw() + labs(title = "Retained INSPIRE edges", y = "Edges")
+
+p2 <- ggplot(threshold_sensitivity, aes(threshold, complete_linkage_clusters)) +
+  geom_line() + geom_point() +
+  geom_vline(xintercept = cutoff, linetype = 2) +
+  theme_bw() + labs(title = "Complete-linkage clusters", y = "Clusters")
+
+p1 + p2
+```
+
+# GO and Pfam hierarchical clustering
+
+```{r go-pfam-hclust, fig.width=12, fig.height=9}
+go_tree <- hclust(as.dist(1 - go_similarity), method = "average")
+pfam_tree <- hclust(as.dist(1 - pfam_similarity), method = "average")
+
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(2, 1), mar = c(4, 4, 3, 1))
+plot(go_tree, main = "GO petal-gene hierarchical clustering", xlab = "", sub = "")
+plot(pfam_tree, main = "Pfam petal-gene hierarchical clustering", xlab = "", sub = "")
+par(old_par)
+```
+
+```{r go-heatmap, fig.width=9, fig.height=9}
+pheatmap(
+  go_similarity,
+  clustering_distance_rows = as.dist(1 - go_similarity),
+  clustering_distance_cols = as.dist(1 - go_similarity),
+  clustering_method = "average",
+  main = "GO petal-gene similarity",
+  border_color = NA
+)
+```
+
+```{r pfam-heatmap, fig.width=9, fig.height=9}
+pheatmap(
+  pfam_similarity,
+  clustering_distance_rows = as.dist(1 - pfam_similarity),
+  clustering_distance_cols = as.dist(1 - pfam_similarity),
+  clustering_method = "average",
+  main = "Pfam petal-gene similarity",
+  border_color = NA
+)
+```
+
+# Final INSPIRE threshold-cluster comparison
+
+```{r final-cluster-table}
+final_cluster_table <- tibble(
+  petal = petal_names,
+  complete_linkage_cluster = as.integer(inspire_complete_clusters[petal_names]),
+  connected_component = as.integer(component_membership[petal_names]),
+  walktrap_cluster = as.integer(walktrap_membership[petal_names])
+)
+
+write_csv(final_cluster_table,
+          file.path(params$output_dir, "inspire_threshold_cluster_comparison.csv"))
+
+final_cluster_table
+```
+
+# Matrix correlations
+
+```{r correlations}
+all_wide <- all_scores |>
+  select(petal_a, petal_b, method, score) |>
+  pivot_wider(names_from = method, values_from = score)
+
+pearson <- cor(all_wide |> select(where(is.numeric)), method = "pearson")
+spearman <- cor(all_wide |> select(where(is.numeric)), method = "spearman")
+
+write.csv(pearson, file.path(params$output_dir, "matrix_correlations_pearson.csv"))
+write.csv(spearman, file.path(params$output_dir, "matrix_correlations_spearman.csv"))
+
+pearson
+spearman
+```
+
+# Database metadata
+
+```{r metadata}
+metadata <- DBI::dbGetQuery(con, "SELECT key, value FROM metadata ORDER BY key")
+write_csv(metadata, file.path(params$output_dir, "database_metadata.csv"))
+metadata
+```
+
+# Disconnect
+
+```{r disconnect}
+DBI::dbDisconnect(con)
+```
+
+# Reproducibility
+
+```{r reproducibility}
+sessionInfo()
+```

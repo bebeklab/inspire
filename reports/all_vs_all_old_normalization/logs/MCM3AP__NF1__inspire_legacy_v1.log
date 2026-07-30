@@ -1,0 +1,132 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite MCM3AP NF1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal MCM3AP (4)
+# 3 interactions in MCM3AP
+Done adding UniProt and Pfam annotations for MCM3AP.
+new petal NF1 (13)
+# 20 interactions in NF1
+Done adding UniProt and Pfam annotations for NF1.
+Petal Sizes: 4, 13
+[1;32mPetal Name: [1;33mMCM3AP
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+MCM3AP
+RANBP2
+TPR
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 RANBP2	pp	APC
+2 TPR	pp	MCM3AP
+3 TPR	pp	RANBP2
+[0m
+[1;32mPetal Name: [1;33mNF1
+[1;32mPetal Size: [1;33m13[0;31m
+APC
+ATM
+BRCA1
+CDC42
+EGFR
+ERBIN
+GSK3B
+MDM2
+NF1
+PTEN
+SMAD4
+TCF7L2
+TNKS
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC42	pp	APC
+2 ERBIN	pp	APC
+3 ERBIN	pp	EGFR
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 MDM2	pp	GSK3B
+7 NF1	pp	ATM
+8 NF1	pp	BRCA1
+9 NF1	pp	EGFR
+10 NF1	pp	MDM2
+11 PTEN	pp	CDC42
+12 PTEN	pp	GSK3B
+13 PTEN	pp	NF1
+14 SMAD4	pp	APC
+15 SMAD4	pp	ATM
+16 SMAD4	pp	PTEN
+17 TCF7L2	pp	APC
+18 TCF7L2	pp	PTEN
+19 TNKS	pp	APC
+20 TNKS	pp	PTEN
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mMCM3AP - NF1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 6
+counterPetal2 40
+counterPetal1*counterPetal2 240
+(*AGE).size()=240
+[0m---- 
+[1;33mAGE nodes: 240[0m
+Allocate AGEgraph :  240 x 240	57600 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.0509165
+0 131 cost: 2500
+[0;36m		[A1. APC::A2. RANBP2] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. CDC42::B2. PTEN}[0m
+131 188 cost: 1428
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. TPR::A2. MCM3AP] ---  [B1. PTEN::B2. GSK3B}[0m
+
+Displayed tree score: 0.0509165
+
+2th run results (1) [new minumum]:0.0848176
+2 137 cost: 540
+[0;36m		[A1. APC::A2. RANBP2] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. GSK3B::B2. BRCA1}[0m
+137 169 cost: 1818
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. GSK3B::B2. BRCA1}[0m
+[0;36m		[A1. TPR::A2. MCM3AP] ---  [B1. BRCA1::B2. NF1}[0m
+
+Displayed tree score: 0.0848176
+
+4th run results (2) [new minumum]:0.117509
+4 157 cost: 869
+[0;36m		[A1. APC::A2. RANBP2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. TCF7L2::B2. PTEN}[0m
+157 188 cost: 833
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. TCF7L2::B2. PTEN}[0m
+[0;36m		[A1. TPR::A2. MCM3AP] ---  [B1. PTEN::B2. GSK3B}[0m
+
+Displayed tree score: 0.117509
+
+5th run results (3) [new minumum]:0.152207
+5 159 cost: 625
+[0;36m		[A1. APC::A2. RANBP2] ---  [B1. APC::B2. TNKS}[0m
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. TNKS::B2. PTEN}[0m
+159 188 cost: 689
+[0;36m		[A1. RANBP2::A2. TPR] ---  [B1. TNKS::B2. PTEN}[0m
+[0;36m		[A1. TPR::A2. MCM3AP] ---  [B1. PTEN::B2. GSK3B}[0m
+
+Displayed tree score: 0.152207
+
+77th run results (4) [new minumum]:0.152788
+77 228 cost: 769
+[0;36m		[A1. MCM3AP::A2. TPR] ---  [B1. TCF7L2::B2. PTEN}[0m
+[0;36m		[A1. TPR::A2. RANBP2] ---  [B1. PTEN::B2. GSK3B}[0m
+228 96 cost: 540
+[0;36m		[A1. TPR::A2. RANBP2] ---  [B1. PTEN::B2. GSK3B}[0m
+[0;36m		[A1. RANBP2::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+
+Displayed tree score: 0.152788
+
+Petal1:3	Petal2:20	treecost: 1309	 tree size:2
+$RESULT$	MCM3AP	NF1	norm_score:	0.152788
+[0m
+[0 min 0 sec] All done in 

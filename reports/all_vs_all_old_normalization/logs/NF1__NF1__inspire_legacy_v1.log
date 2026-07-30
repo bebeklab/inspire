@@ -1,0 +1,169 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite NF1 NF1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal NF1 (13)
+# 20 interactions in NF1
+Done adding UniProt and Pfam annotations for NF1.
+new petal NF1 (13)
+# 20 interactions in NF1
+Done adding UniProt and Pfam annotations for NF1.
+Petal Sizes: 13, 13
+[1;32mPetal Name: [1;33mNF1
+[1;32mPetal Size: [1;33m13[0;31m
+APC
+ATM
+BRCA1
+CDC42
+EGFR
+ERBIN
+GSK3B
+MDM2
+NF1
+PTEN
+SMAD4
+TCF7L2
+TNKS
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC42	pp	APC
+2 ERBIN	pp	APC
+3 ERBIN	pp	EGFR
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 MDM2	pp	GSK3B
+7 NF1	pp	ATM
+8 NF1	pp	BRCA1
+9 NF1	pp	EGFR
+10 NF1	pp	MDM2
+11 PTEN	pp	CDC42
+12 PTEN	pp	GSK3B
+13 PTEN	pp	NF1
+14 SMAD4	pp	APC
+15 SMAD4	pp	ATM
+16 SMAD4	pp	PTEN
+17 TCF7L2	pp	APC
+18 TCF7L2	pp	PTEN
+19 TNKS	pp	APC
+20 TNKS	pp	PTEN
+[0m
+[1;32mPetal Name: [1;33mNF1
+[1;32mPetal Size: [1;33m13[0;31m
+APC
+ATM
+BRCA1
+CDC42
+EGFR
+ERBIN
+GSK3B
+MDM2
+NF1
+PTEN
+SMAD4
+TCF7L2
+TNKS
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC42	pp	APC
+2 ERBIN	pp	APC
+3 ERBIN	pp	EGFR
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 MDM2	pp	GSK3B
+7 NF1	pp	ATM
+8 NF1	pp	BRCA1
+9 NF1	pp	EGFR
+10 NF1	pp	MDM2
+11 PTEN	pp	CDC42
+12 PTEN	pp	GSK3B
+13 PTEN	pp	NF1
+14 SMAD4	pp	APC
+15 SMAD4	pp	ATM
+16 SMAD4	pp	PTEN
+17 TCF7L2	pp	APC
+18 TCF7L2	pp	PTEN
+19 TNKS	pp	APC
+20 TNKS	pp	PTEN
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mNF1 - NF1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 40
+counterPetal2 40
+counterPetal1*counterPetal2 1600
+(*AGE).size()=1600
+[0m---- 
+[1;33mAGE nodes: 1600[0m
+Allocate AGEgraph :  1600 x 1600	2560000 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:1
+0 451 cost: 100
+[0;36m		[A1. APC::A2. CDC42] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+0 574 cost: 100
+[0;36m		[A1. APC::A2. CDC42] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. ERBIN::B2. APC}[0m
+574 82 cost: 100
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. ERBIN::B2. APC}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+574 123 cost: 100
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. ERBIN::B2. APC}[0m
+[0;36m		[A1. APC::A2. SMAD4] ---  [B1. APC::B2. SMAD4}[0m
+574 164 cost: 100
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. ERBIN::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+574 205 cost: 100
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. ERBIN::B2. APC}[0m
+[0;36m		[A1. APC::A2. TNKS] ---  [B1. APC::B2. TNKS}[0m
+574 492 cost: 100
+[0;36m		[A1. ERBIN::A2. APC] ---  [B1. ERBIN::B2. APC}[0m
+[0;36m		[A1. EGFR::A2. ERBIN] ---  [B1. EGFR::B2. ERBIN}[0m
+82 697 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+697 369 cost: 100
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+[0;36m		[A1. BRCA1::A2. NF1] ---  [B1. BRCA1::B2. NF1}[0m
+82 738 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. MDM2] ---  [B1. GSK3B::B2. MDM2}[0m
+82 779 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. PTEN] ---  [B1. GSK3B::B2. PTEN}[0m
+738 861 cost: 100
+[0;36m		[A1. GSK3B::A2. MDM2] ---  [B1. GSK3B::B2. MDM2}[0m
+[0;36m		[A1. MDM2::A2. NF1] ---  [B1. MDM2::B2. NF1}[0m
+369 902 cost: 100
+[0;36m		[A1. BRCA1::A2. NF1] ---  [B1. BRCA1::B2. NF1}[0m
+[0;36m		[A1. NF1::A2. ATM] ---  [B1. NF1::B2. ATM}[0m
+902 287 cost: 100
+[0;36m		[A1. NF1::A2. ATM] ---  [B1. NF1::B2. ATM}[0m
+[0;36m		[A1. ATM::A2. SMAD4] ---  [B1. ATM::B2. SMAD4}[0m
+902 533 cost: 100
+[0;36m		[A1. NF1::A2. ATM] ---  [B1. NF1::B2. ATM}[0m
+[0;36m		[A1. EGFR::A2. NF1] ---  [B1. EGFR::B2. NF1}[0m
+369 1066 cost: 100
+[0;36m		[A1. BRCA1::A2. NF1] ---  [B1. BRCA1::B2. NF1}[0m
+[0;36m		[A1. NF1::A2. PTEN] ---  [B1. NF1::B2. PTEN}[0m
+451 1230 cost: 100
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. SMAD4] ---  [B1. PTEN::B2. SMAD4}[0m
+451 1271 cost: 100
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+451 1312 cost: 100
+[0;36m		[A1. CDC42::A2. PTEN] ---  [B1. CDC42::B2. PTEN}[0m
+[0;36m		[A1. PTEN::A2. TNKS] ---  [B1. PTEN::B2. TNKS}[0m
+
+Displayed tree score: 1
+
+Petal1:20	Petal2:20	treecost: 1900	 tree size:19
+$RESULT$	NF1	NF1	norm_score:	1
+[0m
+[0 min 0 sec] All done in 

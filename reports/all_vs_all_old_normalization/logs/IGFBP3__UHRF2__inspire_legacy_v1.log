@@ -1,0 +1,79 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite IGFBP3 UHRF2 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal IGFBP3 (4)
+# 3 interactions in IGFBP3
+Done adding UniProt and Pfam annotations for IGFBP3.
+new petal UHRF2 (5)
+# 5 interactions in UHRF2
+Done adding UniProt and Pfam annotations for UHRF2.
+Petal Sizes: 4, 5
+[1;32mPetal Name: [1;33mIGFBP3
+[1;32mPetal Size: [1;33m4[0;31m
+APC
+GSK3B
+IGFBP3
+WNT5A
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 WNT5A	pp	GSK3B
+3 WNT5A	pp	IGFBP3
+[0m
+[1;32mPetal Name: [1;33mUHRF2
+[1;32mPetal Size: [1;33m5[0;31m
+APC
+CCND1
+GSK3B
+LRP6
+UHRF2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 GSK3B	pp	CCND1
+3 LRP6	pp	APC
+4 LRP6	pp	CCND1
+5 UHRF2	pp	CCND1
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mIGFBP3 - UHRF2[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 6
+counterPetal2 10
+counterPetal1*counterPetal2 60
+(*AGE).size()=60
+[0m---- 
+[1;33mAGE nodes: 60[0m
+Allocate AGEgraph :  60 x 60	3600 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.171086
+0 26 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. WNT5A] ---  [B1. GSK3B::B2. CCND1}[0m
+0 53 cost: 952
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. WNT5A::A2. IGFBP3] ---  [B1. CCND1::B2. LRP6}[0m
+
+Displayed tree score: 0.171086
+
+1th run results (1) [new minumum]:0.192308
+1 28 cost: 500
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. LRP6}[0m
+[0;36m		[A1. GSK3B::A2. WNT5A] ---  [B1. LRP6::B2. CCND1}[0m
+28 52 cost: 540
+[0;36m		[A1. GSK3B::A2. WNT5A] ---  [B1. LRP6::B2. CCND1}[0m
+[0;36m		[A1. WNT5A::A2. IGFBP3] ---  [B1. CCND1::B2. GSK3B}[0m
+
+Displayed tree score: 0.192308
+
+Petal1:3	Petal2:5	treecost: 1040	 tree size:2
+$RESULT$	IGFBP3	UHRF2	norm_score:	0.192308
+[0m
+[0 min 0 sec] All done in 

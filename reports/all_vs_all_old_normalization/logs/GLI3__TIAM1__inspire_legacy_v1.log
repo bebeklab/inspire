@@ -1,0 +1,138 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite GLI3 TIAM1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal GLI3 (6)
+# 7 interactions in GLI3
+Done adding UniProt and Pfam annotations for GLI3.
+new petal TIAM1 (6)
+# 7 interactions in TIAM1
+Done adding UniProt and Pfam annotations for TIAM1.
+Petal Sizes: 6, 6
+[1;32mPetal Name: [1;33mGLI3
+[1;32mPetal Size: [1;33m6[0;31m
+APC
+CREBBP
+GLI3
+GSK3B
+LRP6
+RUNX2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GLI3	pp	CREBBP
+2 GSK3B	pp	APC
+3 GSK3B	pp	CREBBP
+4 LRP6	pp	APC
+5 RUNX2	pp	GLI3
+6 RUNX2	pp	GSK3B
+7 RUNX2	pp	LRP6
+[0m
+[1;32mPetal Name: [1;33mTIAM1
+[1;32mPetal Size: [1;33m6[0;31m
+APC
+GSK3B
+PTEN
+SMAD4
+TCF7L2
+TIAM1
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 GSK3B	pp	APC
+2 PTEN	pp	GSK3B
+3 SMAD4	pp	APC
+4 SMAD4	pp	PTEN
+5 TCF7L2	pp	APC
+6 TCF7L2	pp	PTEN
+7 TIAM1	pp	PTEN
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mGLI3 - TIAM1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 14
+counterPetal2 14
+counterPetal1*counterPetal2 196
+(*AGE).size()=196
+[0m---- 
+[1;33mAGE nodes: 196[0m
+Allocate AGEgraph :  196 x 196	38416 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.156955
+0 135 cost: 227
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. LRP6::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+0 116 cost: 256
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. RUNX2] ---  [B1. GSK3B::B2. PTEN}[0m
+0 188 cost: 571
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. RUNX2::A2. LRP6] ---  [B1. PTEN::B2. SMAD4}[0m
+0 161 cost: 645
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. RUNX2::A2. GLI3] ---  [B1. PTEN::B2. TCF7L2}[0m
+
+Displayed tree score: 0.156955
+
+15th run results (1) [new minumum]:0.167294
+15 87 cost: 227
+[0;36m		[A1. APC::A2. LRP6] ---  [B1. APC::B2. SMAD4}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+87 173 cost: 256
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. RUNX2::A2. GSK3B] ---  [B1. PTEN::B2. GSK3B}[0m
+87 80 cost: 540
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. GLI3::A2. RUNX2] ---  [B1. SMAD4::B2. PTEN}[0m
+87 152 cost: 571
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. LRP6::A2. RUNX2] ---  [B1. TCF7L2::B2. PTEN}[0m
+
+Displayed tree score: 0.167294
+
+35th run results (2) [new minumum]:0.172676
+35 0 cost: 645
+[0;36m		[A1. CREBBP::A2. GLI3] ---  [B1. PTEN::B2. TCF7L2}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+0 135 cost: 227
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. LRP6::A2. APC] ---  [B1. SMAD4::B2. APC}[0m
+0 116 cost: 256
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. RUNX2] ---  [B1. GSK3B::B2. PTEN}[0m
+0 188 cost: 571
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. RUNX2::A2. LRP6] ---  [B1. PTEN::B2. SMAD4}[0m
+0 162 cost: 714
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. RUNX2::A2. GLI3] ---  [B1. PTEN::B2. TIAM1}[0m
+
+Displayed tree score: 0.172676
+
+54th run results (3) [new minumum]:0.184775
+54 87 cost: 487
+[0;36m		[A1. CREBBP::A2. GSK3B] ---  [B1. TCF7L2::B2. PTEN}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+87 15 cost: 227
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. APC::A2. LRP6] ---  [B1. APC::B2. SMAD4}[0m
+87 173 cost: 256
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. RUNX2::A2. GSK3B] ---  [B1. PTEN::B2. GSK3B}[0m
+87 150 cost: 571
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. LRP6::A2. RUNX2] ---  [B1. SMAD4::B2. PTEN}[0m
+87 83 cost: 714
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. GLI3::A2. RUNX2] ---  [B1. TIAM1::B2. PTEN}[0m
+
+Displayed tree score: 0.184775
+
+Petal1:7	Petal2:7	treecost: 2255	 tree size:5
+$RESULT$	GLI3	TIAM1	norm_score:	0.184775
+[0m
+[0 min 0 sec] All done in 

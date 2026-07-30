@@ -1,0 +1,195 @@
+COMMAND: /Users/gurkan/Box/Research/INSPIRE/inspire-replication/src/INSPIRE /Users/gurkan/Box/Research/INSPIRE/inspire-replication/database/inspire.sqlite ERCC6 NF1 inspire_legacy_v1
+
+GO normalization for inspire_legacy_v1: 14.1026
+Loaded 5995 GO pair scores for inspire_legacy_v1
+Create two petals
+Begin PETAL setup
+new petal ERCC6 (7)
+# 8 interactions in ERCC6
+Done adding UniProt and Pfam annotations for ERCC6.
+new petal NF1 (13)
+# 20 interactions in NF1
+Done adding UniProt and Pfam annotations for NF1.
+Petal Sizes: 7, 13
+[1;32mPetal Name: [1;33mERCC6
+[1;32mPetal Size: [1;33m7[0;31m
+APC
+BRCA1
+CDC73
+EP300
+ERCC6
+GSK3B
+TCF7L2
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 ERCC6	pp	BRCA1
+2 ERCC6	pp	CDC73
+3 ERCC6	pp	EP300
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 TCF7L2	pp	APC
+7 TCF7L2	pp	CDC73
+8 TCF7L2	pp	EP300
+[0m
+[1;32mPetal Name: [1;33mNF1
+[1;32mPetal Size: [1;33m13[0;31m
+APC
+ATM
+BRCA1
+CDC42
+EGFR
+ERBIN
+GSK3B
+MDM2
+NF1
+PTEN
+SMAD4
+TCF7L2
+TNKS
+[0m---- 
+[1;36mPetal Interactions[0;32m
+1 CDC42	pp	APC
+2 ERBIN	pp	APC
+3 ERBIN	pp	EGFR
+4 GSK3B	pp	APC
+5 GSK3B	pp	BRCA1
+6 MDM2	pp	GSK3B
+7 NF1	pp	ATM
+8 NF1	pp	BRCA1
+9 NF1	pp	EGFR
+10 NF1	pp	MDM2
+11 PTEN	pp	CDC42
+12 PTEN	pp	GSK3B
+13 PTEN	pp	NF1
+14 SMAD4	pp	APC
+15 SMAD4	pp	ATM
+16 SMAD4	pp	PTEN
+17 TCF7L2	pp	APC
+18 TCF7L2	pp	PTEN
+19 TNKS	pp	APC
+20 TNKS	pp	PTEN
+[0m
+Done creating Petals.
+petals are loaded
+[1;32mAGE for [0;36mERCC6 - NF1[0m
+[0;35minitial size for AGE: 0[0m
+counterPetal1 16
+counterPetal2 40
+counterPetal1*counterPetal2 640
+(*AGE).size()=640
+[0m---- 
+[1;33mAGE nodes: 640[0m
+Allocate AGEgraph :  640 x 640	409600 bytes
+
+[0 min 0 sec] Nodes are done in 
+
+[0 min 0 sec] Edges are done in 
+0th run results (0) [new minumum]:0.197044
+0 556 cost: 217
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. CDC42}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+556 497 cost: 200
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+556 231 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+556 399 cost: 526
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. CDC73] ---  [B1. TNKS::B2. PTEN}[0m
+
+Displayed tree score: 0.197044
+
+2th run results (1) [new minumum]:0.242388
+2 497 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+2 556 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+556 231 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+556 399 cost: 526
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. CDC73] ---  [B1. TNKS::B2. PTEN}[0m
+
+Displayed tree score: 0.242388
+
+99th run results (2) [new minumum]:0.245459
+99 2 cost: 512
+[0;36m		[A1. BRCA1::A2. ERCC6] ---  [B1. GSK3B::B2. PTEN}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+2 497 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+2 556 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+556 231 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+556 399 cost: 526
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. CDC73] ---  [B1. TNKS::B2. PTEN}[0m
+
+Displayed tree score: 0.245459
+
+104th run results (3) [new minumum]:0.2475
+104 497 cost: 500
+[0;36m		[A1. BRCA1::A2. ERCC6] ---  [B1. NF1::B2. EGFR}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+497 2 cost: 100
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+2 556 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+556 231 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+556 399 cost: 526
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. CDC73] ---  [B1. TNKS::B2. PTEN}[0m
+
+Displayed tree score: 0.2475
+
+128th run results (4) [new minumum]:0.24926
+128 456 cost: 100
+[0;36m		[A1. BRCA1::A2. GSK3B] ---  [B1. BRCA1::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+456 44 cost: 100
+[0;36m		[A1. GSK3B::A2. APC] ---  [B1. GSK3B::B2. APC}[0m
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+44 597 cost: 217
+[0;36m		[A1. APC::A2. TCF7L2] ---  [B1. APC::B2. TCF7L2}[0m
+[0;36m		[A1. TCF7L2::A2. CDC73] ---  [B1. TCF7L2::B2. PTEN}[0m
+128 263 cost: 500
+[0;36m		[A1. BRCA1::A2. GSK3B] ---  [B1. BRCA1::B2. GSK3B}[0m
+[0;36m		[A1. EP300::A2. ERCC6] ---  [B1. NF1::B2. BRCA1}[0m
+
+Displayed tree score: 0.24926
+
+207th run results (5) [new minumum]:0.253653
+207 2 cost: 465
+[0;36m		[A1. CDC73::A2. TCF7L2] ---  [B1. ATM::B2. SMAD4}[0m
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+2 497 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. GSK3B::A2. BRCA1] ---  [B1. GSK3B::B2. BRCA1}[0m
+2 556 cost: 100
+[0;36m		[A1. APC::A2. GSK3B] ---  [B1. APC::B2. GSK3B}[0m
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+556 311 cost: 217
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. EP300::A2. TCF7L2] ---  [B1. PTEN::B2. TCF7L2}[0m
+556 439 cost: 526
+[0;36m		[A1. TCF7L2::A2. APC] ---  [B1. TCF7L2::B2. APC}[0m
+[0;36m		[A1. ERCC6::A2. EP300] ---  [B1. TNKS::B2. PTEN}[0m
+
+Displayed tree score: 0.253653
+
+Petal1:8	Petal2:20	treecost: 1408	 tree size:5
+$RESULT$	ERCC6	NF1	norm_score:	0.253653
+[0m
+[0 min 0 sec] All done in 
