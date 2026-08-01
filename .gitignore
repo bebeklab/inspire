@@ -31,3 +31,5 @@ venv/
 .idea/
 reports/*.log
 .Rproj.user
+*.png
+GIT_WORKFLOW.md
