@@ -33,3 +33,5 @@ reports/*.log
 .Rproj.user
 *.png
 GIT_WORKFLOW.md
+*.png
+GIT_WORKFLOW.md
