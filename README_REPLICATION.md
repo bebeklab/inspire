@@ -28,8 +28,6 @@ inspire-replication/
 │   └── go/
 │       ├── go-basic.obo               # GO ontology input
 │       └── HUMAN-uniprot.gaf.gz       # human UniProt GO annotations
-├── R/
-│   └── INSPIRE_current_human_clustering.Rmd
 ├── reports/                           # generated outputs; normally not committed
 ├── scripts/
 │   ├── build_inspire_database.py
@@ -388,84 +386,13 @@ reports/all_vs_all/
 
 ## 10. Cluster and visualize the similarity matrix
 
-Render the current-human report from the repository root:
-
-```bash
-ROOT="$(pwd)"
-Rscript -e "rmarkdown::render(
-  'R/INSPIRE_current_human_clustering.Rmd',
-  params = list(
-    database = '$ROOT/database/inspire.sqlite',
-    inspire_log_dir = '$ROOT/reports/all_vs_all/logs',
-    output_dir = '$ROOT/reports/clustering_current_human'
-  )
-)"
-```
 
 Primary clustering:
 
 ```r
-hclust(as.dist(1 - inspire_similarity), method = "complete")
 hclust(as.dist(1 - inspire_similarity), method = "ward.D2")
 ```
 
-Complete linkage is the primary historical-method interpretation. Ward.D2 is retained as a sensitivity analysis because historical materials are not fully consistent about linkage choice.
-
-Thresholded networks from 0.45 through 0.70 are secondary sensitivity analyses. Do not select a threshold solely because it produces a visually desirable cluster.
+Ward.D2 is used for clustering. 
 
  
-## 12. Scientific limitations and interpretation
-
-1. The petals are reconstructed context-specific subnetworks, not complete pathway diagrams.
-2. A biologically obligatory interaction may be absent after upstream path or evidence filtering.
-3. Current GO and Pfam versions differ from historical versions, so exact historical scores are not expected.
-4. Historical normalization constants cannot be applied to a newly computed GO cache without invalidating self-alignment.
-5. High similarity can be driven by exact shared interactions and common hubs; alignment logs should be inspected for the strongest pairs.
-6. Low similarity can reflect discordant network construction rather than biological independence.
-7. Hierarchical clustering is exploratory. Thresholded graph communities are secondary and threshold-sensitive.
-8. The SMAD3-SMAD4 discrepancy is an open network-provenance audit item.
-
-
-
-
-
-
-
-## 13. Reproducibility record for a release
-
-Before creating a release, record:
-
-```bash
-git rev-parse HEAD
-shasum -a 256 input/blossom_edge_list_7_26a.csv
-shasum -a 256 input/go/go-basic.obo
-shasum -a 256 input/go/HUMAN-uniprot.gaf.gz
-shasum -a 256 database/inspire.sqlite
-python3 --version
-sqlite3 --version
-clang++ --version
-Rscript -e 'sessionInfo()'
-```
-
-Export database metadata:
-
-```bash
-sqlite3 -header -csv database/inspire.sqlite \
-  "SELECT key, value FROM metadata ORDER BY key;" \
-  > reports/database_metadata.csv
-```
-
-A release should identify:
-
-- repository commit hash;
-- input checksums;
-- annotation release metadata;
-- algorithm identifier;
-- GO normalization;
-- compiler and package versions;
-- number of completed comparisons;
-- known limitations and unresolved audits.
-
-## 14. Clean rebuild principle
-
-Generated databases, binaries, logs, HTML reports, plots, and intermediate outputs should be reproducible from version-controlled source code and documented inputs. A clean replication should be possible by cloning the repository, acquiring the versioned scientific inputs, rebuilding the database, compiling INSPIRE, running the comparisons, and rendering the R Markdown report.
