@@ -1,0 +1,21 @@
+name: Mirror to Group Repo
+
+on: [push, delete]
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Group Repository
+        env:
+          # Replace with the actual target repo (omit https://)
+          DEST_REPO: "github.com/bebeklab/inspire.git"
+          GROUP_TOKEN: ${{ secrets.GROUP_TOKEN }}
+        run: |
+          git remote add mirror https://${GROUP_TOKEN}@${DEST_REPO}
+          git push --mirror mirror
