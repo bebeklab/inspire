@@ -35,3 +35,19 @@ reports/*.log
 GIT_WORKFLOW.md
 *.png
 GIT_WORKFLOW.md
+
+# Exclude specific subfolders
+R/old/
+input/go/
+
+
+database/
+networks/
+reports/
+tex/
+validation/
+GIT_WORKFLOW.md
+
+
+R/
+validation/

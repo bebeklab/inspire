@@ -34,7 +34,6 @@ SQLITE_PREFIX="$(brew --prefix sqlite)" && clang++ -std=c++11 -O3 -DNDEBUG -Wall
 #include <errno.h>    // NEW: for errno after mkdir
 #include <set>   // NEW: needed for loggedIndices in writeAlignmentLog
 
-
 using namespace std;
 
  
@@ -192,177 +191,9 @@ void writeAGEgraph2(char const  *s,float*** A,int size){
 	myfile.close();
 }
 
-bool alignmentNodesConflict(
-    const AlignedGeneEdge* selected,
-    const AlignedGeneEdge* candidate)
-{
-    /*
-     * First enforce physical-edge uniqueness.
-     *
-     * The networks are undirected, so:
-     *
-     * A1-A2 is the same physical edge as A2-A1.
-     * B1-B2 is the same physical edge as B2-B1.
-     */
-
-    const bool sameAEdge =
-        (
-            selected->A1 == candidate->A1
-            &&
-            selected->A2 == candidate->A2
-        )
-        ||
-        (
-            selected->A1 == candidate->A2
-            &&
-            selected->A2 == candidate->A1
-        );
-
-    if (sameAEdge)
-    {
-        return true;
-    }
-
-    const bool sameBEdge =
-        (
-            selected->B1 == candidate->B1
-            &&
-            selected->B2 == candidate->B2
-        )
-        ||
-        (
-            selected->B1 == candidate->B2
-            &&
-            selected->B2 == candidate->B1
-        );
-
-    if (sameBEdge)
-    {
-        return true;
-    }
-
-    /*
-     * Now enforce node-mapping consistency.
-     *
-     * selected->A1 maps to selected->B1.
-     * selected->A2 maps to selected->B2.
-     *
-     * Gene pointers are used only as anonymous graph-vertex
-     * identities. Protein names are not used for selection.
-     */
-
-    // selected A1 -> selected B1
-
-    if (
-        candidate->A1 == selected->A1
-        &&
-        candidate->B1 != selected->B1)
-    {
-        return true;
-    }
-
-    if (
-        candidate->A2 == selected->A1
-        &&
-        candidate->B2 != selected->B1)
-    {
-        return true;
-    }
-
-    if (
-        candidate->B1 == selected->B1
-        &&
-        candidate->A1 != selected->A1)
-    {
-        return true;
-    }
-
-    if (
-        candidate->B2 == selected->B1
-        &&
-        candidate->A2 != selected->A1)
-    {
-        return true;
-    }
-
-    // selected A2 -> selected B2
-
-    if (
-        candidate->A1 == selected->A2
-        &&
-        candidate->B1 != selected->B2)
-    {
-        return true;
-    }
-
-    if (
-        candidate->A2 == selected->A2
-        &&
-        candidate->B2 != selected->B2)
-    {
-        return true;
-    }
-
-    if (
-        candidate->B1 == selected->B2
-        &&
-        candidate->A1 != selected->A2)
-    {
-        return true;
-    }
-
-    if (
-        candidate->B2 == selected->B2
-        &&
-        candidate->A2 != selected->A2)
-    {
-        return true;
-    }
-
-    return false;
-}
 
 
-
-
-void pruneConflictingNodes(
-    unsigned int selectedIndex,
-    int* visited,
-    unsigned int n,
-    vector<AlignedGeneEdge*>* AGE)
-{
-    AlignedGeneEdge* selected =
-        AGE->at(selectedIndex);
-
-    for (
-        unsigned int candidateIndex = 0;
-        candidateIndex < n;
-        candidateIndex++)
-    {
-        if (candidateIndex == selectedIndex)
-        {
-            continue;
-        }
-
-        if (visited[candidateIndex])
-        {
-            continue;
-        }
-
-        AlignedGeneEdge* candidate =
-            AGE->at(candidateIndex);
-
-        if (
-            alignmentNodesConflict(
-                selected,
-                candidate))
-        {
-            visited[candidateIndex] = 1;
-        }
-    }
-
-    visited[selectedIndex] = 1;
-}
+ 
 
 
 //n is size of prim's tree
@@ -383,7 +214,7 @@ int prims_spanningtree(unsigned int src_node, unsigned char*** AGEgraph, int*** 
 	unsigned int u=0;
 	unsigned int p=0;
 	unsigned int q=0;
-//	unsigned int v=0;
+	unsigned int v=0;
 //	float** cost;
 
 //*	cout<< "Allocs..."<<endl;
@@ -457,17 +288,30 @@ int prims_spanningtree(unsigned int src_node, unsigned char*** AGEgraph, int*** 
 //*		}
 		
 	}
-
 	u = src_node;
+//*	int count=0;
+	
+	for (v = 0; v < n; v++){
+		if ( (((*AGE).at(v))->A1 == ((*AGE).at(u))->A1 &&
+			 ((*AGE).at(v))->A2 == ((*AGE).at(u))->A2 )||
+			 (((*AGE).at(v))->B1 == ((*AGE).at(u))->B1 &&
+			 ((*AGE).at(v))->B2 == ((*AGE).at(u))->B2 ) ||
 
-	pruneConflictingNodes(
-	    src_node,
-	    visited,
-	    n,
-	    AGE
-	);
-	
-	
+			 (((*AGE).at(v))->A1 == ((*AGE).at(u))->A2 &&
+				 ((*AGE).at(v))->A2 == ((*AGE).at(u))->A1 )||
+				 (((*AGE).at(v))->B1 == ((*AGE).at(u))->B2 &&
+				 ((*AGE).at(v))->B2 == ((*AGE).at(u))->B1 )
+			){
+//*				cout<<count<<RED  <<"v "<<v<< " ++++"; printAGE( ((*AGE).at(v)) );
+//				cout<<count++<<RED<<"u "<<u<< " ++++"; printAGE( ((*AGE).at(u)) );
+  			visited[v]=1;
+
+
+		}
+	}
+
+//I think this is the actual traversal
+	visited[src_node] = 1;
 	stcost = 0;
 	k = 0;
 	for (p = 0; p < (n-1); p++){
@@ -526,15 +370,41 @@ int prims_spanningtree(unsigned int src_node, unsigned char*** AGEgraph, int*** 
 		//"visit" any nodes that do not agree with our most recent alignment
         //"visit" any nodes that do not agree with our most recent alignment
         // FIXED: check all 4 proteins of u against all 4 roles in v
+        for (unsigned int v = 0; v < n; v++)
+        {
+            if (visited[v]) continue; // already pruned, skip
 
-		pruneConflictingNodes(
-		    u,
-		    visited,
-		    n,
-		    AGE
-		);
+            AlignedGeneEdge* eu = (*AGE).at(u);
+            AlignedGeneEdge* ev = (*AGE).at(v);
 
+            bool conflict = false;
 
+            // --- Committed mapping: eu->A1 <-> eu->B1 ---
+            // If v uses eu->A1 as its A1, then v->B1 must be eu->B1
+            if (ev->A1 == eu->A1 && ev->B1 != eu->B1) conflict = true;
+            // If v uses eu->A1 as its A2, then v->B2 must be eu->B1
+            if (ev->A2 == eu->A1 && ev->B2 != eu->B1) conflict = true;
+            // If v uses eu->B1 as its B1, then v->A1 must be eu->A1
+            if (ev->B1 == eu->B1 && ev->A1 != eu->A1) conflict = true;
+            // If v uses eu->B1 as its B2, then v->A2 must be eu->A1
+            if (ev->B2 == eu->B1 && ev->A2 != eu->A1) conflict = true;
+
+            // --- Committed mapping: eu->A2 <-> eu->B2 ---
+            // If v uses eu->A2 as its A1, then v->B1 must be eu->B2
+            if (ev->A1 == eu->A2 && ev->B1 != eu->B2) conflict = true;
+            // If v uses eu->A2 as its A2, then v->B2 must be eu->B2
+            if (ev->A2 == eu->A2 && ev->B2 != eu->B2) conflict = true;
+            // If v uses eu->B2 as its B1, then v->A1 must be eu->A2
+            if (ev->B1 == eu->B2 && ev->A1 != eu->A2) conflict = true;
+            // If v uses eu->B2 as its B2, then v->A2 must be eu->A2
+            if (ev->B2 == eu->B2 && ev->A2 != eu->A2) conflict = true;
+
+            if (conflict)
+            {
+                visited[v] = 1;
+            }
+        }
+		
 		stcost = stcost + d[u];
 		(*tree)[k][1] = parent[u];
 		(*tree)[k][2] = u;
@@ -602,264 +472,9 @@ int prims_display(float stcost,int*** tree,int n,vector<AlignedGeneEdge*>* AGE, 
 
 // ─────────────────────────────────────────────────────────────────
 // writeAlignmentLog
-
-void writeFinalAlignmentBlock(
-	ostream& output,
-	Petal* petalA,
-    Petal* petalB,
-    const string& algorithm,
-    unsigned int sourceIndex,
-    float normalizedScore,
-    int treeCost,
-    int treeSize,
-    int*** tree,
-    int n,
-    vector<AlignedGeneEdge*>* AGE)
-{
-    output
-        << "$ALIGNMENT_BEGIN$"
-        << endl;
-
-    output
-        << "$ALIGNMENT_META$"
-		<< "\tpetal_a=" << petalA->Name
-		<< "\tpetal_b=" << petalB->Name
-		<< "\tpetal_a_interactions=" << petalA->interactionSize
-		<< "\tpetal_b_interactions=" << petalB->interactionSize
-        << "\talgorithm=" << algorithm
-        << "\tsource_age_index=" << sourceIndex
-        << "\tnormalized_score=" << normalizedScore
-        << "\ttree_cost=" << treeCost
-        << "\ttree_size=" << treeSize
-        << endl;
-
-	output
-	    << "$NETWORK_A_COLUMNS$"
-	    << "\tedge_id"
-	    << "\tnode1"
-	    << "\tnode2"
-	    << endl;
-
-	unsigned int networkAEdgeId = 0;
-
-	for (int i = 0; i < petalA->size; i++)
-	{
-	    /*
-	     * j begins at i + 1 because the networks are undirected.
-	     * This writes each physical interaction exactly once.
-	     */
-	    for (int j = i + 1; j < petalA->size; j++)
-	    {
-	        if (petalA->matrix[i][j] == 0)
-	        {
-	            continue;
-	        }
-
-	        output
-	            << "$NETWORK_A_EDGE$"
-	            << "\t" << networkAEdgeId
-	            << "\t" << petalA->GenesList[i]->Name
-	            << "\t" << petalA->GenesList[j]->Name
-	            << endl;
-
-	        networkAEdgeId++;
-	    }
-	}
-	
-	output
-	    << "$NETWORK_B_COLUMNS$"
-	    << "\tedge_id"
-	    << "\tnode1"
-	    << "\tnode2"
-	    << endl;
-
-	unsigned int networkBEdgeId = 0;
-
-	for (int i = 0; i < petalB->size; i++)
-	{
-	    for (int j = i + 1; j < petalB->size; j++)
-	    {
-	        if (petalB->matrix[i][j] == 0)
-	        {
-	            continue;
-	        }
-
-	        output
-	            << "$NETWORK_B_EDGE$"
-	            << "\t" << networkBEdgeId
-	            << "\t" << petalB->GenesList[i]->Name
-	            << "\t" << petalB->GenesList[j]->Name
-	            << endl;
-
-	        networkBEdgeId++;
-	    }
-	}
-	
-    output
-        << "$ALIGNMENT_COLUMNS$"
-        << "\trank"
-        << "\tage_index"
-        << "\tparent_age_index"
-        << "\ttransition_cost"
-        << "\ta1"
-        << "\ta2"
-        << "\tb1"
-        << "\tb2"
-        << endl;
-
-    set<unsigned int> writtenIndices;
-
-    /*
-     * The source AGE node is part of the alignment, although
-     * the tree array stores only edges added after the source.
-     */
-    AlignedGeneEdge* source =
-        AGE->at(sourceIndex);
-
-    output
-        << "$ALIGNMENT_EDGE$"
-        << "\t0"
-        << "\t" << sourceIndex
-        << "\t" << -1
-        << "\t" << 0
-        << "\t" << source->A1->Name
-        << "\t" << source->A2->Name
-        << "\t" << source->B1->Name
-        << "\t" << source->B2->Name
-        << endl;
-
-    writtenIndices.insert(sourceIndex);
-
-    unsigned int rank = 1;
-
-    for (int row = 0; row < n - 1; row++)
-    {
-        if ((*tree)[row][4] != ADDED)
-        {
-            continue;
-        }
-
-        const unsigned int selectedIndex =
-            static_cast<unsigned int>(
-                (*tree)[row][2]
-            );
-
-        /*
-         * Defensive check. Each AGE node should be written once.
-         */
-        if (writtenIndices.count(selectedIndex) > 0)
-        {
-            continue;
-        }
-
-        AlignedGeneEdge* selected =
-            AGE->at(selectedIndex);
-
-        output
-            << "$ALIGNMENT_EDGE$"
-            << "\t" << rank
-            << "\t" << selectedIndex
-            << "\t" << (*tree)[row][1]
-            << "\t" << (*tree)[row][3]
-            << "\t" << selected->A1->Name
-            << "\t" << selected->A2->Name
-            << "\t" << selected->B1->Name
-            << "\t" << selected->B2->Name
-            << endl;
-
-        writtenIndices.insert(selectedIndex);
-        rank++;
-    }
-
-    output
-        << "$ALIGNMENT_END$"
-        << endl;
-}
-
-
-bool createParentDirectories(
-    const string& filePath)
-{
-    size_t separatorPosition =
-        filePath.find_last_of("/\\");
-
-    /*
-     * No directory component exists.
-     * The file will be written to the current directory.
-     */
-    if (separatorPosition == string::npos)
-    {
-        return true;
-    }
-
-    string directoryPath =
-        filePath.substr(
-            0,
-            separatorPosition
-        );
-
-    if (directoryPath.empty())
-    {
-        return true;
-    }
-
-    string currentPath;
-
-    /*
-     * Preserve an absolute Unix path beginning with "/".
-     */
-    if (directoryPath[0] == '/')
-    {
-        currentPath = "/";
-    }
-
-    stringstream pathStream(directoryPath);
-    string component;
-
-    while (getline(pathStream, component, '/'))
-    {
-        if (
-            component.empty()
-            ||
-            component == ".")
-        {
-            continue;
-        }
-
-        if (
-            !currentPath.empty()
-            &&
-            currentPath[
-                currentPath.size() - 1
-            ] != '/')
-        {
-            currentPath += "/";
-        }
-
-        currentPath += component;
-
-        if (
-            mkdir(
-                currentPath.c_str(),
-                0755
-            ) != 0
-            &&
-            errno != EEXIST)
-        {
-            cerr
-                << "ERROR: could not create directory: "
-                << currentPath
-                << " (errno "
-                << errno
-                << ")"
-                << endl;
-
-            return false;
-        }
-    }
-
-    return true;
-}
+//   Creates  log/<PetalA>_<PetalB>_YYYYMMDD_HHMMSS.log
+//   and writes a structured log that plot_alignment.py can parse.
+// ─────────────────────────────────────────────────────────────────
 
 
 int main(int argc, char *argv[])
@@ -867,13 +482,13 @@ int main(int argc, char *argv[])
 	
 	if (argc < 4)
 	{
-		cout
-		    << "Usage: "
-		    << argv[0]
-		    << " DATABASE PETAL_A PETAL_B"
-		    << " [GO_ALGORITHM]"
-		    << " [ALIGNMENT_LOG]"
-		    << endl;
+	    cout
+	        << "Usage: "
+	        << argv[0]
+	        << " DATABASE PETAL_A PETAL_B [GO_ALGORITHM]"
+	        << endl;
+
+	    return -1;
 	}
 
 	if (
@@ -907,11 +522,11 @@ int main(int argc, char *argv[])
 	
 	
 	
-	start_time = time (NULL);
+  	start_time = time (NULL);
 	time_t end_time;
 	VERBOSE=0;//0: no verbose - >0: yes verbose
 
-
+ 	
 	int ape_count;
 	int treecost=0;
 	//int edge_type_count[3];
@@ -925,24 +540,13 @@ int main(int argc, char *argv[])
 	cout<< "petals are loaded"<<endl;
  	
 	// empty network...
-	if (ape_count == -1)
-	{
-	    cout
-	        << "+++ One of the networks was not found"
-	        << " or has no interactions +++ NO CIGAR +++"
-	        << endl;
-
-	    cout
-	        << "$RESULT$\t"
-	        << argv[2]
-	        << "\t"
-	        << argv[3]
-	        << "\tnorm_score:\t"
-	        << "-0\t\tNO_RESULT"
-	        << endl;
-
-	    return 0;
+	if(ape_count==-1){
+		cout<< "+++ One of the networks has no interaction +++ NO CIGAR +++"<<endl;
+		cout << "$RESULT$\t" << (Petals[0])->Name << "\t"<< (Petals[1])->Name <<  "\tnorm_score:\t" << "-0\t\tNO_RESULT"<<endl;
+		return 0;
+		
 	}
+	
 	
 	
 	// Create APE or Aligned Gene Edges
@@ -1307,185 +911,38 @@ int main(int argc, char *argv[])
 		///end else
 	}
 //	cout<< "minumum: "<< treecost<< " "<< start_node<<endl;
-
-	if (start_node == -1){
-	    cout
-	        << "+++ None of the starting nodes returned "
-	        << "significant results +++ NO CIGAR +++"
-	        << endl;
-
-	    cout
-	        << "$RESULT$\t"
-	        << Petals[0]->Name
-	        << "\t"
-	        << Petals[1]->Name
-	        << "\tnorm_score:\t"
-	        << "-0\t\tNO_RESULT"
-	        << endl;
-	}else{
-	    /*
-	     * Reconstruct the winning alignment from the best
-	     * starting AGE node.
-	     */
-	    treecost =
-	        prims_spanningtree(
-	            static_cast<unsigned int>(start_node),
-	            &AGEgraph,
-	            &tree,
-	            static_cast<unsigned int>(age_size),
-	            &AGE
-	        );
-
-	    int tree_size =
-	        prims_display(
-	            treecost,
-	            &tree,
-	            age_size,
-	            &AGE,
-	            false
-	        );
-
-	    cout
-	        << "Petal1:"
-	        << Petals[0]->interactionSize
-	        << "\tPetal2:"
-	        << Petals[1]->interactionSize
-	        << "\ttreecost: "
-	        << treecost
-	        << "\t tree size:"
-	        << tree_size
-	        << endl;
-
-	    if (
-	        treecost != 0
-	        &&
-	        treecost != numeric_limits<int>::max()
-	    )
-	    {
-	        int max_tree =
-	            min(
-	                Petals[0]->interactionSize,
-	                Petals[1]->interactionSize
-	            );
-
-	        /*
-	         * This is the local variable I previously called
-	         * finalNormalizedScore. It is declared here.
-	         */
-	        float finalNormalizedScore =
-	            normalizeScore(
-	                tree_size,
-	                max_tree,
-	                treecost
-	            );
-
-	        cout
-	            << "$RESULT$\t"
-	            << Petals[0]->Name
-	            << "\t"
-	            << Petals[1]->Name
-	            << "\tnorm_score:\t"
-	            << finalNormalizedScore
-	            << endl;
-
-	        /*
-	         * Write the final winning alignment in a format
-	         * that Python can parse later.
-	         */
-			if (argc >= 6)
-			{
-			    const string alignmentLogPath =
-			        argv[5];
-
-			    if (
-			        !createParentDirectories(
-			            alignmentLogPath)
-			    )
-			    {
-			        return 1;
-			    }
-
-			    ofstream alignmentLog(
-			        alignmentLogPath.c_str(),
-			        ios::out | ios::trunc
-			    );
-
-			    if (!alignmentLog.is_open())
-			    {
-			        cerr
-			            << "ERROR: could not open alignment log: "
-			            << alignmentLogPath
-			            << endl;
-
-			        return 1;
-			    }
-
-			    writeFinalAlignmentBlock(
-			        alignmentLog,
-			        Petals[0],
-			        Petals[1],
-			        goAlgorithm,
-			        static_cast<unsigned int>(start_node),
-			        finalNormalizedScore,
-			        treecost,
-			        tree_size,
-			        &tree,
-			        age_size,
-			        &AGE
-			    );
-
-			    alignmentLog.close();
-
-			    if (!alignmentLog)
-			    {
-			        cerr
-			            << "ERROR: failed while writing alignment log: "
-			            << alignmentLogPath
-			            << endl;
-
-			        return 1;
-			    }
-
-			    cout
-			        << "Final alignment written to: "
-			        << alignmentLogPath
-			        << endl;
-			}
-			else
-			{
-			    writeFinalAlignmentBlock(
-			        cout,
-			        Petals[0],
-			        Petals[1],
-			        goAlgorithm,
-			        static_cast<unsigned int>(start_node),
-			        finalNormalizedScore,
-			        treecost,
-			        tree_size,
-			        &tree,
-			        age_size,
-			        &AGE
-			    );
-			}
-
-
-
-	    }
-	    else
-	    {
-	        cout
-	            << "$RESULT$\t"
-	            << Petals[0]->Name
-	            << "\t"
-	            << Petals[1]->Name
-	            << "\tnorm_score:\t"
-	            << "-0\t\tNO_RESULT"
-	            << endl;
-	    }
-
-	    cout << NC;
+	if(start_node==-1){
+		cout<< "+++ None of the starting nodes returned significant results +++ NO CIGAR +++"<<endl;
+		cout << "$RESULT$\t" << (Petals[0])->Name << "\t"<< (Petals[1])->Name <<  "\tnorm_score:\t" << "-0\t\tNO_RESULT"<<endl;
+		//return 0;
 	}
+	else{
+		treecost=prims_spanningtree(start_node, &AGEgraph, &tree, (unsigned int)(age_size), &AGE );
+	
+		//SINGLE VERSION	treecost=prims_spanningtree(0, &AGEgraph, &tree, (unsigned int)(age_size), &AGE );
+	
+		int tree_size=prims_display(treecost, &tree, age_size, &AGE, false );
+		
+		
+		//	normalized score
+		cout <<"Petal1:"<<(Petals[0])->interactionSize<<"\tPetal2:"<<(Petals[1])->interactionSize<<"\ttreecost: "<<treecost<<"\t tree size:"<<tree_size <<endl;
+		int max_tree;
+		if(treecost !=0){
+			// TAKE THE UNION instead of min.
+			max_tree=min((Petals[0])->interactionSize, (Petals[1])->interactionSize);
+			// OLD
+			// cout << "$RESULT$\t" << (Petals[0])->Name << "\t"<< (Petals[1])->Name <<  "\tnorm_score:\t" << (float)(( max_tree - 1)*100 )*((float)tree_size/max_tree)/treecost <<endl;
 
+			// NEW  (size/max)(100*size/score)
+			cout << "$RESULT$\t" << (Petals[0])->Name << "\t"<< (Petals[1])->Name <<  "\tnorm_score:\t";
+			//cout << (float)(tree_size * 100 * tree_size)/((max_tree-1)* treecost) <<endl;
+			cout << normalizeScore(tree_size, max_tree, treecost) <<endl;
+		}
+		else{
+			cout << "$RESULT$\t" << (Petals[0])->Name << "\t"<< (Petals[1])->Name <<  "\tnorm_score:\t" << "-0\t\tNO_RESULT"<<endl;
+		}
+		cout<<NC;
+	}
 
 	/* now for each pointer, free its array of ints */
 	for ( int i = 0; i < age_size ; i++) {
